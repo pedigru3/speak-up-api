@@ -1,9 +1,12 @@
 {
-  "name": "api-nest",
+  "name": "journey-talks-api",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Felipe Ferreira",
   "private": true,
+  "engines": {
+    "node": ">= 18"
+  },
   "license": "UNLICENSED",
   "scripts": {
     "services:up": "docker-compose up -d",

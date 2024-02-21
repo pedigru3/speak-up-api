@@ -1,0 +1,58 @@
+@baseUrl = http://localhost:8080
+@authToken = {{authenticate.response.body.access_token}}
+
+# @name create_account
+POST {{baseUrl}}/account
+Content-Type:  application/json
+
+{
+  "name": "Felipe Ferreira",
+  "email": "teste2@gmail.com",
+  "password": "123"
+}
+
+###
+
+# @name authenticate
+POST {{baseUrl}}/auth
+Content-Type:  application/json
+
+{
+  "email": "teste@gmail.com",
+  "password": "123"
+}
+
+###
+
+# @name create_category_point
+POST {{baseUrl}}/category-point
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "text": "you completed a new tarefa",
+  "value": 10
+}
+
+###
+
+# @name get_info
+GET {{baseUrl}}/info
+Authorization: Bearer {{authToken}}
+
+{
+  "text": "you completed a new tarefa",
+  "value": 10
+}
+
+###
+
+# @name update_user
+PATCH  {{baseUrl}}/user
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "Felipe Ferreira"
+  //"email": teste@gmail.com
+  //"avatar" : File
+}

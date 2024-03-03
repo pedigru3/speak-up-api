@@ -1,8 +1,8 @@
 import { Controller, ForbiddenException, Get, UseGuards } from '@nestjs/common'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
-import { CurrentUser } from 'src/auth/current-user-decorator'
-import { UserPayload } from 'src/auth/jwt.strategy'
-import { PrismaService } from 'src/prisma/prisma.service'
+import { JwtAuthGuard } from '@/auth/jwt-auth.guard'
+import { CurrentUser } from '@/auth/current-user-decorator'
+import { UserPayload } from '@/auth/jwt.strategy'
+import { PrismaService } from '@/prisma/prisma.service'
 
 @Controller('/info')
 @UseGuards(JwtAuthGuard)

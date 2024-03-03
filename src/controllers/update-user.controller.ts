@@ -8,14 +8,14 @@ import {
   UseInterceptors,
 } from '@nestjs/common'
 
-import { PrismaService } from 'src/prisma/prisma.service'
+import { PrismaService } from '@/prisma/prisma.service'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { CurrentUser } from 'src/auth/current-user-decorator'
-import { UserPayload } from 'src/auth/jwt.strategy'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
-import { MULTER } from 'src/configs/upload'
+import { CurrentUser } from '@/auth/current-user-decorator'
+import { UserPayload } from '@/auth/jwt.strategy'
+import { JwtAuthGuard } from '@/auth/jwt-auth.guard'
+import { MULTER } from '@/configs/upload'
 
-import { DiskStorage } from 'src/providers/DiskStorage'
+import { DiskStorage } from '@/providers/DiskStorage'
 import { z } from 'zod'
 
 const updateUserBodySchema = z.object({

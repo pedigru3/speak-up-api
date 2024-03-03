@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  ForbiddenException,
   Post,
   UnauthorizedException,
   UsePipes,
@@ -8,13 +9,14 @@ import {
 
 import { z } from 'zod'
 import { JwtService } from '@nestjs/jwt'
-import { ZodValidationPipe } from 'src/pipes/zod-validation-pipe'
-import { PrismaService } from 'src/prisma/prisma.service'
+import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { PrismaService } from '@/prisma/prisma.service'
 import { compare } from 'bcryptjs'
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
   password: z.string(),
+  admin: z.boolean().default(false),
 })
 
 type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>
@@ -29,7 +31,7 @@ export class AuthenticateController {
   @Post()
   @UsePipes(new ZodValidationPipe(authenticateBodySchema))
   async handler(@Body() body: AuthenticateBodySchema) {
-    const { email, password } = authenticateBodySchema.parse(body)
+    const { email, password, admin } = authenticateBodySchema.parse(body)
 
     const user = await this.prisma.user.findUnique({
       where: {
@@ -45,6 +47,10 @@ export class AuthenticateController {
 
     if (!isPasswordValid) {
       throw new UnauthorizedException('User credentials not match.')
+    }
+
+    if (admin && user?.role !== 'admin') {
+      throw new ForbiddenException('User does not have access')
     }
 
     const accessToken = this.jwt.sign({ sub: user.id })

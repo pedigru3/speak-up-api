@@ -8,11 +8,6 @@ export default defineConfig({
     globals: true,
     root: '/',
   },
-  resolve: {
-    alias: {
-      '@': './src',
-    },
-  },
   plugins: [
     tsConfigPaths(),
     // This is required to build the test files with SWC

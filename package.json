@@ -7,7 +7,6 @@
   "engines": {
     "node": "18"
   },
-  "type": "module",
   "license": "UNLICENSED",
   "scripts": {
     "services:up": "docker-compose up -d",

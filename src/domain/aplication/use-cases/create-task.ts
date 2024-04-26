@@ -1,10 +1,13 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Task } from '../../enterprise/entities/task'
 import { TasksRepository } from '../repositories/tasks-repository'
-import { Either, rigth } from '@/core/either'
+import { Either, left, rigth } from '@/core/either'
 import { UseCaseError } from '@/core/errors/use-cases-error'
 import { TaskAttachmentList } from '@/domain/enterprise/entities/task-attachment-list'
 import { TaskAttachment } from '@/domain/enterprise/entities/task-attachment'
+import { Injectable } from '@nestjs/common'
+import { TeachersRepository } from '../repositories/teachers-repository'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 interface CreateTaskUseCaseRequest {
   teacherId: string
@@ -15,8 +18,12 @@ interface CreateTaskUseCaseRequest {
 
 type CreateTaskUseCaseResponse = Either<UseCaseError, Task>
 
+@Injectable()
 export class CreateTaskUseCase {
-  constructor(private tasksRepository: TasksRepository) {}
+  constructor(
+    private tasksRepository: TasksRepository,
+    private teachersRepository: TeachersRepository,
+  ) {}
 
   async execute({
     content,
@@ -24,6 +31,12 @@ export class CreateTaskUseCase {
     title,
     attachmentsIds,
   }: CreateTaskUseCaseRequest): Promise<CreateTaskUseCaseResponse> {
+    const teacher = await this.teachersRepository.findById(teacherId)
+
+    if (!teacher) {
+      return left(new NotAllowedError())
+    }
+
     const task = Task.create({
       authorId: new UniqueEntityID(teacherId),
       content,

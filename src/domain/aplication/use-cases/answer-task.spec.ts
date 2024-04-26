@@ -12,7 +12,7 @@ describe('Ansewr Task', () => {
     const answerTask = new AswerTaskUseCase(inMemoryAnswersRepository)
 
     const result = await answerTask.execute({
-      content: 'Olá',
+      url: 'Olá',
       studantId: '1',
       taskId: '1',
     })
@@ -21,7 +21,7 @@ describe('Ansewr Task', () => {
       return new Error('Não pode ser Left')
     }
 
-    expect(result.value.content).toBe('Olá')
+    expect(result.value.url).toBe('Olá')
     expect(result.value.id).toBeTruthy()
   })
 })

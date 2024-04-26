@@ -1,4 +1,4 @@
-import { makeAnswer } from 'test/factory/make-answer'
+import { makeAnswer } from 'test/factories/make-answer'
 import { InMemoryAnswersCommentsRepository } from 'test/repositories/in-memory-answers-comments-repository'
 import { CommentOnAnswerUseCase } from './comment-on-answer'
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers-repository'

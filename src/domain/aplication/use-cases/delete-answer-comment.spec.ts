@@ -1,6 +1,6 @@
 import { InMemoryAnswersCommentsRepository } from 'test/repositories/in-memory-answers-comments-repository'
 import { DeleteAnswerCommentUseCase } from './delete-answer-comment'
-import { makeAnswerComment } from 'test/factory/make-answer-comment'
+import { makeAnswerComment } from 'test/factories/make-answer-comment'
 import { NotAllowedError } from './errors/not-allowed-error'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 

@@ -1,6 +1,6 @@
 import { InMemoryTasksRepository } from 'test/repositories/in-memory-tasks-repository'
 import { GetTaskById } from './get-task-by-id'
-import { makeTask } from 'test/factory/make-task'
+import { makeTask } from 'test/factories/make-task'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
 let inMemoryTasksRepository: InMemoryTasksRepository

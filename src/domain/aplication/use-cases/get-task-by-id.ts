@@ -14,7 +14,7 @@ export class GetTaskById {
   constructor(private tasksRepository: TasksRepository) {}
 
   async execute({ id }: GetTaskByIdRequest): Promise<GetTaskByIdResponse> {
-    const task = await this.tasksRepository.getById(id)
+    const task = await this.tasksRepository.findById(id)
 
     if (!task) {
       return left(new ResourceNotFoundError())

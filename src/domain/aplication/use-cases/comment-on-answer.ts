@@ -25,7 +25,7 @@ export class CommentOnAnswerUseCase {
     authorId,
     content,
   }: CommentOnAnswerUseCaseRequest): Promise<CommentOnAnswerUseCaseResponse> {
-    const answer = await this.answerRepository.getById(answerId)
+    const answer = await this.answerRepository.findById(answerId)
 
     if (!answer) {
       return left(new ResourceNotFoundError())

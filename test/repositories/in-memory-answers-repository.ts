@@ -9,7 +9,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
     this.answers.push(answer)
   }
 
-  async getById(id: string): Promise<Answer | null> {
+  async findById(id: string): Promise<Answer | null> {
     const answer = this.answers.find((answer) => answer.id.toString() === id)
     return answer ?? null
   }

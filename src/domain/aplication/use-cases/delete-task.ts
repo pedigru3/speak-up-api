@@ -19,7 +19,7 @@ export class DeleteTaskUseCase {
     taskId,
     authorId,
   }: DeleteTaskUseCaseRequest): Promise<DeleteTaskUseCaseResponse> {
-    const task = await this.tasksRepository.getById(taskId)
+    const task = await this.tasksRepository.findById(taskId)
 
     if (!task) {
       return left(new ResourceNotFoundError())

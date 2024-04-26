@@ -1,5 +1,5 @@
 import { InMemoryTasksRepository } from 'test/repositories/in-memory-tasks-repository'
-import { makeTask } from 'test/factory/make-task'
+import { makeTask } from 'test/factories/make-task'
 import { DeleteTaskUseCase } from './delete-task'
 import { NotAllowedError } from './errors/not-allowed-error'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'

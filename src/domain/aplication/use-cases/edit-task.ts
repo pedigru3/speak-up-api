@@ -1,11 +1,13 @@
 import { Task } from '@/domain/enterprise/entities/task'
 import { TasksRepository } from '../repositories/tasks-repository'
-import { Either, rigth } from '@/core/either'
+import { Either, left, rigth } from '@/core/either'
 import { UseCaseError } from '@/core/errors/use-cases-error'
 import { TaskAttachment } from '@/domain/enterprise/entities/task-attachment'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { TaskAttachmentRepository } from '../repositories/task-attachment-repository'
 import { TaskAttachmentList } from '@/domain/enterprise/entities/task-attachment-list'
+import { NotAllowedError } from './errors/not-allowed-error'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface EditTaskUseCaseRequest {
   authorId: string
@@ -30,14 +32,14 @@ export class EditTaskUseCase {
     content,
     attachmentsIds,
   }: EditTaskUseCaseRequest): Promise<EditTaskUseCaseResponse> {
-    const task = await this.tasksRepository.getById(taskId)
+    const task = await this.tasksRepository.findById(taskId)
 
     if (!task) {
-      throw new Error('Task not found')
+      return left(new ResourceNotFoundError())
     }
 
     if (task.authorId.toString() !== authorId) {
-      throw new Error('Not allowed')
+      return left(new NotAllowedError())
     }
 
     const currentTasksAttachments =

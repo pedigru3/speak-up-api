@@ -11,32 +11,116 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  name     String
-  email    String  @unique
-  password String
-  role     String  @default("user")
-  avatar   String?
-  points   Point[]
+  id         String     @id @default(uuid())
+  name       String
+  email      String     @unique
+  password   String
+  role       String     @default("user")
+  avatar     String?
+  daysInARow Int        @default(0) @map("days_in_a_row")
+  points     Point[]
+  tasks      Task[]
+  Comment    Comment[]
+  Answer     Answer[]
+  Presence   Presence[]
 
   @@map("users")
 }
 
+model Jorney {
+  id          String @id @default(uuid())
+  name        String
+  description String
+  currentDay  String @map("current_day")
+  maxDay      String @map("max_day")
+
+  createdAt DateTime @default(now()) @map("created_at")
+}
+
+model JorneyDay {
+  id              String   @id @default(uuid())
+  date            DateTime
+  currentProgress Int      @default(0) @map("current_progress")
+
+  presenceId String   @map("presence_id")
+  presence   Presence @relation(fields: [presenceId], references: [id])
+
+  @@map("jorney_day")
+}
+
 model PointCategory {
-  id    String  @id @default(uuid())
-  text  String  @unique()
-  value Int
-  icon  String?
-  Point Point[]
+  id     String  @id @default(uuid())
+  text   String  @unique()
+  value  Int
+  icon   String?
+  points Point[]
 
   @@map("points_categories")
 }
 
 model Point {
-  id              String @id @default(uuid())
-  userId          String @map("user_id")
-  pointCategoryId String @map("point_category_id")
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  pointCategoryId String   @map("point_category_id")
+  createdAt       DateTime @default(now()) @map("created_at")
 
   user          User          @relation(fields: [userId], references: [id])
   pointCategory PointCategory @relation(fields: [pointCategoryId], references: [id])
+}
+
+model Task {
+  id       String @id @default(uuid())
+  authorId String @map("author_id")
+
+  title     String
+  content   String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  users       User         @relation(fields: [authorId], references: [id])
+  answers     Answer[]
+  attachments Attachment[]
+}
+
+model Answer {
+  id       String @id @default(uuid())
+  taskId   String @map("task_id")
+  authorId String @map("author_id")
+
+  url       String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  task     Task      @relation(fields: [taskId], references: [id])
+  user     User      @relation(fields: [authorId], references: [id])
+  comments Comment[]
+}
+
+model Comment {
+  id       String @id @default(uuid())
+  answerId String @map("answer_id")
+  authorId String @map("author_id")
+
+  content   String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  answer Answer @relation(fields: [answerId], references: [id])
+  user   User   @relation(fields: [authorId], references: [id])
+}
+
+model Attachment {
+  id     String @id @default(uuid())
+  taskId String @map("task_id")
+  path   String
+
+  task Task @relation(fields: [taskId], references: [id])
+}
+
+model Presence {
+  id        String      @id @default(uuid())
+  userId    String
+  JorneyDay JorneyDay[]
+
+  user User @relation(fields: [userId], references: [id])
 }

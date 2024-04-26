@@ -5,9 +5,9 @@ import { Optional } from '@/core/types/optional'
 export interface AnswerProps {
   studantId: UniqueEntityID
   taskId: UniqueEntityID
-  content: string
+  url: string
   createdAt: Date
-  updatedAt?: Date
+  updatedAt?: Date | null
 }
 
 export class Answer extends Entity<AnswerProps> {
@@ -15,8 +15,12 @@ export class Answer extends Entity<AnswerProps> {
     return this.props.studantId
   }
 
-  get content() {
-    return this.props.content
+  get taskId() {
+    return this.props.taskId
+  }
+
+  get url() {
+    return this.props.url
   }
 
   get createdAt() {
@@ -31,8 +35,8 @@ export class Answer extends Entity<AnswerProps> {
     this.props.updatedAt = new Date()
   }
 
-  set content(content: string) {
-    this.props.content = content
+  set url(content: string) {
+    this.props.url = content
     this.touch()
   }
 
@@ -42,7 +46,7 @@ export class Answer extends Entity<AnswerProps> {
   ) {
     const answer = new Answer(
       {
-        content: props.content,
+        url: props.url,
         studantId: props.studantId,
         taskId: props.taskId,
         createdAt: props.createdAt ?? new Date(),

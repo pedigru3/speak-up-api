@@ -1,9 +1,10 @@
 import { InMemoryTasksRepository } from 'test/repositories/in-memory-tasks-repository'
-import { makeTask } from 'test/factory/make-task'
+import { makeTask } from 'test/factories/make-task'
 import { EditTaskUseCase } from './edit-task'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { InMemoryTaskAttachmentRepository } from 'test/repositories/in-memory-task-attachment-repository'
-import { makeTaskAttachment } from 'test/factory/make-task-attachment'
+import { makeTaskAttachment } from 'test/factories/make-task-attachment'
+import { NotAllowedError } from './errors/not-allowed-error'
 
 let inMemoryTasksRepository: InMemoryTasksRepository
 let inMemoryTaskAttachmentRepository: InMemoryTaskAttachmentRepository
@@ -62,15 +63,14 @@ describe('Edit Task', () => {
 
     await inMemoryTasksRepository.create(newTask)
 
-    expect(
-      async () =>
-        await sut.execute({
-          authorId: 'author-1',
-          taskId: 'task-1',
-          content: 'new content',
-          title: 'new title',
-          attachmentsIds: [],
-        }),
-    ).rejects.toBeInstanceOf(Error)
+    const result = await sut.execute({
+      authorId: 'author-1',
+      taskId: 'task-1',
+      content: 'new content',
+      title: 'new title',
+      attachmentsIds: [],
+    })
+
+    expect(result.value).toBeInstanceOf(NotAllowedError)
   })
 })

@@ -1,5 +1,5 @@
 import { TaskAttachment } from '@/domain/enterprise/entities/task-attachment'
 
-export interface TaskAttachmentRepository {
-  findManyByTaskId(taskId: string): Promise<TaskAttachment[]>
+export abstract class TaskAttachmentRepository {
+  abstract findManyByTaskId(taskId: string): Promise<TaskAttachment[]>
 }

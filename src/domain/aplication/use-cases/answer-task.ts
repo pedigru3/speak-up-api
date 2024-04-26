@@ -7,7 +7,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 interface AnswerTaskUseCaseRequest {
   studantId: string
   taskId: string
-  content: string
+  url: string
 }
 
 type AnswerTaskUseCaseResponse = Either<UseCaseError, Answer>
@@ -16,12 +16,12 @@ export class AswerTaskUseCase {
   constructor(private answerRepository: AnswersRepository) {}
 
   async execute({
-    content,
+    url,
     studantId,
     taskId,
   }: AnswerTaskUseCaseRequest): Promise<AnswerTaskUseCaseResponse> {
     const answer = Answer.create({
-      content,
+      url,
       studantId: new UniqueEntityID(studantId),
       taskId: new UniqueEntityID(taskId),
     })

@@ -14,7 +14,7 @@ export class GetAnswerById {
   constructor(private answersRepository: AnswersRepository) {}
 
   async execute({ id }: GetAnswerByIdRequest): Promise<GetAnswerByIdResponse> {
-    const answer = await this.answersRepository.getById(id)
+    const answer = await this.answersRepository.findById(id)
 
     if (!answer) {
       return left(new NotAllowedError())

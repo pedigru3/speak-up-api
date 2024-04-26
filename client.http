@@ -1,14 +1,14 @@
-@baseUrl = http://localhost:8080
+@baseUrl = http://192.168.0.3:8080
 @authToken = {{authenticate.response.body.access_token}}
 
 # @name create_account
-POST {{baseUrl}}/account
+OST {{baseUrl}}/account
 Content-Type:  application/json
 
 {
   "name": "Felipe Ferreira",
-  "email": "teste2@gmail.com",
-  "password": "123"
+  "email": "teste5@gmail.com",
+  "password": "1234"
 }
 
 ###
@@ -30,7 +30,7 @@ Content-Type:  application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "text": "you completed a new tarefa",
+  "text": "you completed a new task",
   "value": 10
 }
 
@@ -40,10 +40,11 @@ Authorization: Bearer {{authToken}}
 GET {{baseUrl}}/info
 Authorization: Bearer {{authToken}}
 
-{
-  "text": "you completed a new tarefa",
-  "value": 10
-}
+###
+
+# @name get_ranking
+GET {{baseUrl}}/ranking
+Authorization: Bearer {{authToken}}
 
 ###
 
@@ -55,4 +56,17 @@ Authorization: Bearer {{authToken}}
   "name": "Felipe Ferreira"
   //"email": teste@gmail.com
   //"avatar" : File
+}
+
+
+###
+
+# @name create_task
+POST {{baseUrl}}/task
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "title": "Teste",
+  "content": "Conteúdo da task"
 }

@@ -15,7 +15,20 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 const createCategoryPointBodySchema = z.object({
   text: z.string(),
   value: z.number(),
-  icon: z.string().optional(),
+  icon: z
+    .enum([
+      'appointment',
+      'calendar',
+      'calendar2',
+      'chat',
+      'journey',
+      'onlineMeeting',
+      'order',
+      'pendingTask',
+      'taskList',
+      'toDoList',
+    ])
+    .optional(),
 })
 
 type CreateCategoryPointBodySchema = z.infer<
@@ -39,7 +52,7 @@ export class CreateCategoryPoint {
       },
     })
 
-    if (!user || user.role !== 'admin') {
+    if (!user || user.role !== 'ADMIN') {
       throw new ForbiddenException()
     }
 

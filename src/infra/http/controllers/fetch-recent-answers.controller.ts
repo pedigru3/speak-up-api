@@ -7,10 +7,10 @@ import {
 } from '@nestjs/common'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
-import { FetchRecentAnswersUseCase } from '@/domain/aplication/use-cases/fetch-recent-answers'
+import { FetchRecentAnswersUseCase } from '@/domain/gamefication/aplication/use-cases/fetch-recent-answers'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
-import { NotAllowedError } from '@/domain/aplication/use-cases/errors/not-allowed-error'
+import { NotAllowedError } from '@/domain/gamefication/aplication/use-cases/errors/not-allowed-error'
 
 const pageQueryParamSchema = z
   .string()

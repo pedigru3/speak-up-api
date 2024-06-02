@@ -1,7 +1,7 @@
 import { BadRequestException, Controller, Get, Query } from '@nestjs/common'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { z } from 'zod'
-import { FetchRankingUseCase } from '@/domain/aplication/use-cases/students/fetch-ranking'
+import { FetchRankingUseCase } from '@/domain/gamefication/aplication/use-cases/students/fetch-ranking'
 import { StudentRankingPresenter } from '../presenters/student-ranking-presenter'
 
 const pageQueryParamSchema = z

@@ -2,7 +2,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import {
   JorneyDay,
   JorneyDayProps,
-} from '@/domain/enterprise/entities/jorney-day'
+} from '@/domain/gamefication/enterprise/entities/jorney-day'
 import { randomUUID } from 'crypto'
 
 export function makeJorneyDay(

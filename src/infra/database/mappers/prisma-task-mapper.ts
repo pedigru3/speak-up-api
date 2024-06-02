@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { Task } from '@/domain/enterprise/entities/task'
+import { Task } from '@/domain/gamefication/enterprise/entities/task'
 import { Prisma, Task as PrismaTask } from '@prisma/client'
 
 export class PrismaTaskMapper {

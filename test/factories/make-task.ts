@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
 
-import { Task, TaskProps } from '@/domain/enterprise/entities/task'
+import { Task, TaskProps } from '@/domain/gamefication/enterprise/entities/task'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Injectable } from '@nestjs/common'
 import { PrismaTaskMapper } from '@/infra/database/mappers/prisma-task-mapper'

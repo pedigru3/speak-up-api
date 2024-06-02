@@ -6,6 +6,7 @@ import { UPLOADS_FOLDER } from '@/configs/upload'
 import { HttpModule } from './http/http.module'
 import { envSchema } from './env/env'
 import { EnvService } from './env/env.service'
+import { EventsModule } from './events/events.module'
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { EnvService } from './env/env.service'
     }),
     AuthModule,
     HttpModule,
+    EventsModule,
   ],
   providers: [EnvService],
 })

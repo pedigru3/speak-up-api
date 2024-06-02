@@ -1,6 +1,9 @@
 import { faker } from '@faker-js/faker'
 
-import { Answer, AnswerProps } from '@/domain/enterprise/entities/answer'
+import {
+  Answer,
+  AnswerProps,
+} from '@/domain/gamefication/enterprise/entities/answer'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { Injectable } from '@nestjs/common'

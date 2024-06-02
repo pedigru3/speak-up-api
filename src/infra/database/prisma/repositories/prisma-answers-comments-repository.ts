@@ -1,6 +1,6 @@
-import { AnswersCommentsRepository } from '@/domain/aplication/repositories/answers-comments-repository'
-import { AnswersRepository } from '@/domain/aplication/repositories/answers-repository'
-import { AnswerComment } from '@/domain/enterprise/entities/answer-comment'
+import { AnswersCommentsRepository } from '@/domain/gamefication/aplication/repositories/answers-comments-repository'
+import { AnswersRepository } from '@/domain/gamefication/aplication/repositories/answers-repository'
+import { AnswerComment } from '@/domain/gamefication/enterprise/entities/answer-comment'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()

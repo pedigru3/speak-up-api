@@ -1,6 +1,6 @@
-import { rigth } from '@/core/either'
-import { InvalidAttachmentTypeError } from '@/domain/aplication/use-cases/errors/invalid-attachment-type-error'
-import { UploadAndCreateAnswerUseCase } from '@/domain/aplication/use-cases/upload-and-create-answer'
+import { right } from '@/core/either'
+import { InvalidAttachmentTypeError } from '@/domain/gamefication/aplication/use-cases/errors/invalid-attachment-type-error'
+import { UploadAndCreateAnswerUseCase } from '@/domain/gamefication/aplication/use-cases/upload-and-create-answer'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 import {
@@ -62,6 +62,6 @@ export class UploadAudioController {
       }
     }
 
-    return rigth(result.value)
+    return right(result.value)
   }
 }

@@ -1,5 +1,5 @@
-import { PresencesRepository } from '@/domain/aplication/repositories/presences-repository'
-import { Presence } from '@/domain/enterprise/entities/presence'
+import { PresencesRepository } from '@/domain/gamefication/aplication/repositories/presences-repository'
+import { Presence } from '@/domain/gamefication/enterprise/entities/presence'
 
 export class InMemoryPresencesRepository implements PresencesRepository {
   public items: Presence[] = []

@@ -51,4 +51,14 @@ describe('watched list', () => {
     expect(list.getRemovedItems()).toEqual([2])
     expect(list.getNewItems()).toEqual([5])
   })
+
+  it('shold be able to update watched list items', () => {
+    const list = new NumberWatchedList([3, 3, 3])
+
+    list.update([3, 3, 3])
+
+    expect(list.currentItems).toHaveLength(3)
+    expect(list.getRemovedItems()).toEqual([])
+    expect(list.getNewItems()).toEqual([])
+  })
 })

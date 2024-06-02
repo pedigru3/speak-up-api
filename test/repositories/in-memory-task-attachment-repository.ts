@@ -1,5 +1,5 @@
-import { TaskAttachmentRepository } from '@/domain/aplication/repositories/task-attachment-repository'
-import { TaskAttachment } from '@/domain/enterprise/entities/task-attachment'
+import { TaskAttachmentRepository } from '@/domain/gamefication/aplication/repositories/task-attachment-repository'
+import { TaskAttachment } from '@/domain/gamefication/enterprise/entities/task-attachment'
 
 export class InMemoryTaskAttachmentRepository
   implements TaskAttachmentRepository

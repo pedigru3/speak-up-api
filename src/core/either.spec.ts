@@ -1,8 +1,8 @@
-import { Either, left, rigth } from './either'
+import { Either, left, right } from './either'
 
 function doSomething(x: boolean): Either<string, string> {
   if (x) {
-    return rigth('success')
+    return right('success')
   } else {
     return left('error')
   }
@@ -11,7 +11,7 @@ function doSomething(x: boolean): Either<string, string> {
 test('success result', () => {
   const successResult = doSomething(true)
 
-  expect(successResult.isRigth()).toEqual(true)
+  expect(successResult.isright()).toEqual(true)
 })
 
 test('error result', () => {

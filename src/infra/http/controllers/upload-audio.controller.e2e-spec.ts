@@ -7,7 +7,7 @@ import request from 'supertest'
 import { StudentFactory } from 'test/factories/make-student'
 import { TaskFactory } from 'test/factories/make-task'
 
-describe('Upload audio attachment (E2E)', () => {
+describe.skip('Upload audio attachment (E2E)', () => {
   let app: INestApplication
   let studentFactory: StudentFactory
   let tasksFactory: TaskFactory

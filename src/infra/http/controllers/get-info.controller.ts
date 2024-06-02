@@ -8,8 +8,8 @@ import {
 import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
-import { GetInfoUseCase } from '@/domain/aplication/use-cases/students/get-info'
-import { NotAllowedError } from '@/domain/aplication/use-cases/errors/not-allowed-error'
+import { GetInfoUseCase } from '@/domain/gamefication/aplication/use-cases/students/get-info'
+import { NotAllowedError } from '@/domain/gamefication/aplication/use-cases/errors/not-allowed-error'
 import { InfoPresenter } from '../presenters/info-presenter'
 
 @Controller('/info')

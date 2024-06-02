@@ -9,9 +9,9 @@ import {
 
 import { z } from 'zod'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
-import { AuthenticateStudentUseCase } from '@/domain/aplication/use-cases/students/authenticate-student'
-import { WrongCredentialsError } from '@/domain/aplication/use-cases/students/errors/wrong-credentials-error'
+import { WrongCredentialsError } from '@/domain/gamefication/aplication/use-cases/students/errors/wrong-credentials-error'
 import { Public } from '@/infra/auth/public'
+import { AuthenticateUserUseCase } from '@/domain/gamefication/aplication/use-cases/students/authenticate-user'
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -24,14 +24,14 @@ type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>
 @Controller('/auth')
 @Public()
 export class AuthenticateController {
-  constructor(private authenticateStudent: AuthenticateStudentUseCase) {}
+  constructor(private authenticateUser: AuthenticateUserUseCase) {}
 
   @Post()
   @UsePipes(new ZodValidationPipe(authenticateBodySchema))
   async handler(@Body() body: AuthenticateBodySchema) {
     const { email, password } = authenticateBodySchema.parse(body)
 
-    const result = await this.authenticateStudent.execute({
+    const result = await this.authenticateUser.execute({
       email,
       password,
     })
@@ -46,8 +46,8 @@ export class AuthenticateController {
       }
     }
 
-    const { accessToken } = result.value
+    const { accessToken, refreshToken, user } = result.value
 
-    return { access_token: accessToken, type: 'Bearer' }
+    return { access_token: accessToken, refresh_token: refreshToken, user }
   }
 }

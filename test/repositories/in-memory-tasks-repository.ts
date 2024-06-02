@@ -1,5 +1,5 @@
-import { TasksRepository } from '@/domain/aplication/repositories/tasks-repository'
-import { Task } from '@/domain/enterprise/entities/task'
+import { TasksRepository } from '@/domain/gamefication/aplication/repositories/tasks-repository'
+import { Task } from '@/domain/gamefication/enterprise/entities/task'
 
 export class InMemoryTasksRepository implements TasksRepository {
   public tasks: Task[] = []

@@ -1,5 +1,5 @@
-import { Point } from '@/domain/enterprise/entities/point'
-import { Student } from '@/domain/enterprise/entities/student'
+import { Point } from '@/domain/gamefication/enterprise/entities/point'
+import { Student } from '@/domain/gamefication/enterprise/entities/student'
 
 export class InfoPresenter {
   static toHttp({

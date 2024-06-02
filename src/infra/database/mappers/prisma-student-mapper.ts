@@ -4,7 +4,7 @@ import {
   Point as PrismaPoint,
 } from '@prisma/client'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { Student } from '@/domain/enterprise/entities/student'
+import { Student } from '@/domain/gamefication/enterprise/entities/student'
 
 export type PrismaUserWithPoints = PrismaUser & {
   points: (PrismaPoint & { pointCategory: { value: number } })[]
@@ -17,8 +17,10 @@ export class PrismaStudentMapper {
         name: raw.name,
         email: raw.email,
         password: raw.password,
+        role: raw.role,
         avatar: raw.avatar,
         daysInARow: raw.daysInARow,
+        refreshToken: null,
         points: raw.points.reduce(
           (accumulator, point) => accumulator + point.pointCategory.value,
           0,
@@ -36,7 +38,7 @@ export class PrismaStudentMapper {
       email: student.email,
       password: student.password,
       daysInARow: student.daysInARow,
-      role: 'user',
+      role: 'USER',
     }
   }
 }

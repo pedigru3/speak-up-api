@@ -2,7 +2,6 @@ import {
   BadRequestException,
   Body,
   Controller,
-  FileTypeValidator,
   MaxFileSizeValidator,
   ParseFilePipe,
   Patch,
@@ -16,10 +15,10 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard'
 import { z } from 'zod'
-import { EditStudentUseCase } from '@/domain/aplication/use-cases/students/edit-student'
-import { ResourceNotFoundError } from '@/domain/aplication/use-cases/errors/resource-not-found-error'
+import { EditStudentUseCase } from '@/domain/gamefication/aplication/use-cases/students/edit-student'
+import { ResourceNotFoundError } from '@/domain/gamefication/aplication/use-cases/errors/resource-not-found-error'
 import { StudentPresenter } from '../presenters/student-presenter'
-import { InvalidAttachmentTypeError } from '@/domain/aplication/use-cases/errors/invalid-attachment-type-error'
+import { InvalidAttachmentTypeError } from '@/domain/gamefication/aplication/use-cases/errors/invalid-attachment-type-error'
 
 const updateUserBodySchema = z.object({
   name: z.string().optional(),

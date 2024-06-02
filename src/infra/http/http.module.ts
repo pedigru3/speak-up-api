@@ -5,44 +5,84 @@ import { CreateCategoryPoint } from './controllers/create-category-point.control
 import { GetInfoController } from './controllers/get-info.controller'
 import { UpdateUserController } from './controllers/update-user.controller'
 import { DatabaseModule } from '../database/database.module'
-import { CreateTaskUseCase } from '@/domain/aplication/use-cases/create-task'
+import { CreateTaskUseCase } from '@/domain/gamefication/aplication/use-cases/create-task'
 import { CreateTaskController } from './controllers/create-task.controller'
 import { FetchRecentAnswersController } from './controllers/fetch-recent-answers.controller'
-import { FetchRecentAnswersUseCase } from '@/domain/aplication/use-cases/fetch-recent-answers'
-import { RegisterStudentUseCase } from '@/domain/aplication/use-cases/students/register-student'
-import { AuthenticateStudentUseCase } from '@/domain/aplication/use-cases/students/authenticate-student'
+import { FetchRecentAnswersUseCase } from '@/domain/gamefication/aplication/use-cases/fetch-recent-answers'
+import { RegisterStudentUseCase } from '@/domain/gamefication/aplication/use-cases/students/register-student'
+import { AuthenticateStudentUseCase } from '@/domain/gamefication/aplication/use-cases/students/authenticate-student'
 import { CryptographModule } from '../cryptograph/cryptograph.module'
 import { GetRankingController } from './controllers/get-ranking.controller'
-import { FetchRankingUseCase } from '@/domain/aplication/use-cases/students/fetch-ranking'
-import { GetInfoUseCase } from '@/domain/aplication/use-cases/students/get-info'
+import { FetchRankingUseCase } from '@/domain/gamefication/aplication/use-cases/students/fetch-ranking'
+import { GetInfoUseCase } from '@/domain/gamefication/aplication/use-cases/students/get-info'
 import { UploadAudioController } from './controllers/upload-audio.controller'
 import { UploadAttachmentController } from './controllers/upload-attachment.controller'
-import { UploadAndCreateAnswerUseCase } from '@/domain/aplication/use-cases/upload-and-create-answer'
+import { UploadAndCreateAnswerUseCase } from '@/domain/gamefication/aplication/use-cases/upload-and-create-answer'
 import { StorageModule } from '../storage/storage.module'
-import { EditStudentUseCase } from '@/domain/aplication/use-cases/students/edit-student'
+import { EditStudentUseCase } from '@/domain/gamefication/aplication/use-cases/students/edit-student'
+import { CreateJourneyController } from './controllers/create-journey.controller'
+import { CreateJourneyUseCase } from '@/domain/gamefication/aplication/use-cases/jorney/create-jorney'
+import { FetchRecentJorneysController } from './controllers/fetch-recent-journeys.controller'
+import { FetchRecentJourneysUseCase } from '@/domain/gamefication/aplication/use-cases/jorney/fetch-recent-journeys'
+import { CreateClassDayController } from './controllers/create-class-day.controller'
+import { CreateClassDayUseCase } from '@/domain/gamefication/aplication/use-cases/jorney/create-class-day'
+import { GetClassDayController } from './controllers/get-class-day.controller'
+import { GetClassDayByIdUseCase } from '@/domain/gamefication/aplication/use-cases/jorney/get-class-day-by-id'
+import { UpdateClassDayController } from './controllers/update-class-day.controller'
+import { EditClassDayUseCase } from '@/domain/gamefication/aplication/use-cases/jorney/edit-class-day'
+import { AddPresenceUseCase } from '@/domain/gamefication/aplication/use-cases/students/add-presence'
+import { AddPointUseCase } from '@/domain/gamefication/aplication/use-cases/points/add-points'
+import { AuthenticateUserUseCase } from '@/domain/gamefication/aplication/use-cases/students/authenticate-user'
+import { GetUserController } from './controllers/get-user.controllet'
+import { GetUserByIdUseCase } from '@/domain/gamefication/aplication/use-cases/get-user-by-id'
+import { RefreshController } from './controllers/refresh.controller'
+import { RefreshUseCase } from '@/domain/gamefication/aplication/use-cases/refresh'
+import { AddPointController } from './controllers/add-point.controller'
+import { ReadNotificationController } from './controllers/read-notification.controller'
+import { ReadNotificationUseCase } from '@/domain/notification/aplication/use-cases/read-notification'
 
 @Module({
   imports: [DatabaseModule, CryptographModule, StorageModule],
   controllers: [
     CreateAccountController,
     AuthenticateController,
+    CreateJourneyController,
     CreateCategoryPoint,
     GetInfoController,
     UpdateUserController,
+    UpdateClassDayController,
     CreateTaskController,
+    CreateClassDayController,
     FetchRecentAnswersController,
+    FetchRecentJorneysController,
     GetRankingController,
+    GetClassDayController,
+    GetUserController,
     UploadAudioController,
     UploadAttachmentController,
+    RefreshController,
+    AddPointController,
+    ReadNotificationController,
   ],
   providers: [
+    ReadNotificationUseCase,
+    AddPresenceUseCase,
+    AddPointUseCase,
+    CreateJourneyUseCase,
+    CreateClassDayUseCase,
     CreateTaskUseCase,
     EditStudentUseCase,
+    EditClassDayUseCase,
     FetchRecentAnswersUseCase,
+    GetClassDayByIdUseCase,
     RegisterStudentUseCase,
     AuthenticateStudentUseCase,
+    AuthenticateUserUseCase,
+    RefreshUseCase,
     FetchRankingUseCase,
+    FetchRecentJourneysUseCase,
     GetInfoUseCase,
+    GetUserByIdUseCase,
     UploadAndCreateAnswerUseCase,
   ],
 })

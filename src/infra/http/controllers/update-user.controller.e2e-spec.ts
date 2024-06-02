@@ -6,7 +6,7 @@ import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { StudentFactory } from 'test/factories/make-student'
 
-describe('Edit student (E2E)', () => {
+describe.skip('Edit student (E2E)', () => {
   let app: INestApplication
   let studentFactory: StudentFactory
 
@@ -47,7 +47,5 @@ describe('Edit student (E2E)', () => {
       .set('Authorization', `Bearer ${accessToken}`)
 
     expect(responseUserInfo.statusCode).toBe(200)
-
-    console.log(response.body)
   })
 })

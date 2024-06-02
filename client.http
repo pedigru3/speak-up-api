@@ -1,4 +1,4 @@
-@baseUrl = http://192.168.0.3:8080
+@baseUrl = http://localhost:8080
 @authToken = {{authenticate.response.body.access_token}}
 
 # @name create_account
@@ -7,8 +7,8 @@ Content-Type:  application/json
 
 {
   "name": "Felipe Ferreira",
-  "email": "teste5@gmail.com",
-  "password": "1234"
+  "email": "teste@gmail.com",
+  "password": "123"
 }
 
 ###
@@ -20,6 +20,17 @@ Content-Type:  application/json
 {
   "email": "teste@gmail.com",
   "password": "123"
+}
+
+
+###
+
+# @name refresh
+POST  {{baseUrl}}/refresh
+Content-Type:  application/json
+
+{
+  "token": "549d8f8d-d669-4374-bdb2-546634537d56"
 }
 
 ###
@@ -58,6 +69,27 @@ Authorization: Bearer {{authToken}}
   //"avatar" : File
 }
 
+###
+
+# @name create_journey
+POST {{baseUrl}}/journey
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "title": "New Journey",
+  "description": "A new journey enrolation that I can to be possible to fetch anything with inglish and aprouch that things that u can not see again and against but is that you are a nothing",
+  "max_day": 21
+}
+
+
+###
+
+# @name fetch_journeys
+GET {{baseUrl}}/journeys?page=1
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+
 
 ###
 
@@ -70,3 +102,21 @@ Authorization: Bearer {{authToken}}
   "title": "Teste",
   "content": "Conteúdo da task"
 }
+
+###
+
+# @name create_classday
+POST {{baseUrl}}/classday
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "journey_id": "cb6c21d0-19fc-4198-b2e7-ced770c83ce1"
+}
+
+###
+
+# @name get_classDay
+GET {{baseUrl}}/classday
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}

@@ -10,49 +10,84 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 model User {
-  id         String     @id @default(uuid())
-  name       String
-  email      String     @unique
-  password   String
-  role       String     @default("user")
-  avatar     String?
-  daysInARow Int        @default(0) @map("days_in_a_row")
-  points     Point[]
-  tasks      Task[]
-  Comment    Comment[]
-  Answer     Answer[]
-  Presence   Presence[]
+  id            String        @id @default(uuid())
+  name          String
+  email         String        @unique
+  password      String
+  role          Role          @default(USER)
+  avatar        String?
+  daysInARow    Int           @default(0) @map("days_in_a_row")
+  refresh_token RefreshToken?
+
+  points        Point[]
+  tasks         Task[]
+  comments      Comment[]
+  ansers        Answer[]
+  presences     Presence[]
+  notifications Notification[]
 
   @@map("users")
 }
 
-model Jorney {
-  id          String @id @default(uuid())
-  name        String
-  description String
-  currentDay  String @map("current_day")
-  maxDay      String @map("max_day")
+model RefreshToken {
+  id        String @id @default(uuid())
+  expiresIn Int    @map("expires_in")
+  userId    String @unique
 
-  createdAt DateTime @default(now()) @map("created_at")
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("refresh_token")
 }
 
-model JorneyDay {
+model Journey {
+  id          String @id @default(uuid())
+  title       String
+  description String
+  maxDay      Int    @map("max_day")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  jorneyDays JourneyDay[]
+}
+
+model JourneyDay {
   id              String   @id @default(uuid())
+  jorneyId        String   @map("journey_id")
   date            DateTime
   currentProgress Int      @default(0) @map("current_progress")
 
-  presenceId String   @map("presence_id")
-  presence   Presence @relation(fields: [presenceId], references: [id])
+  presences Presence[]
 
-  @@map("jorney_day")
+  journey Journey @relation(fields: [jorneyId], references: [id])
+
+  @@map("journey_day")
+}
+
+enum Icon {
+  appointment
+  calendar
+  calendar2
+  chat
+  journey
+  onlineMeeting
+  order
+  pendingTask
+  taskList
+  toDoList
 }
 
 model PointCategory {
-  id     String  @id @default(uuid())
-  text   String  @unique()
-  value  Int
-  icon   String?
+  id    String @id @default(uuid())
+  text  String @unique()
+  value Int
+  icon  Icon   @default(chat)
+
   points Point[]
 
   @@map("points_categories")
@@ -118,9 +153,25 @@ model Attachment {
 }
 
 model Presence {
-  id        String      @id @default(uuid())
-  userId    String
-  JorneyDay JorneyDay[]
+  id           String   @id @default(uuid())
+  userId       String
+  journeyDayId String   @map("jorney_day_id")
+  createdAt    DateTime @default(now()) @map("created_at")
 
-  user User @relation(fields: [userId], references: [id])
+  jorneyDay JourneyDay @relation(fields: [journeyDayId], references: [id])
+  user      User       @relation(fields: [userId], references: [id])
+}
+
+model Notification {
+  id          String @id @default(uuid())
+  recipientId String @map("recipient_id")
+
+  title     String
+  content   String
+  readAt    DateTime? @map("read_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  recipient User @relation(fields: [recipientId], references: [id])
+
+  @@map("notifications")
 }

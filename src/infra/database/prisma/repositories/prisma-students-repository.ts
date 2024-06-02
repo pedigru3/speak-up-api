@@ -1,14 +1,14 @@
-import { Student } from '@/domain/enterprise/entities/student'
+import { Student } from '@/domain/gamefication/enterprise/entities/student'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
-import { StudentsRepository } from '@/domain/aplication/repositories/students-repository'
+import { StudentsRepository } from '@/domain/gamefication/aplication/repositories/students-repository'
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { PrismaStudentMapper } from '../../mappers/prisma-student-mapper'
 import {
   PrismaStudentRanking,
   PrismaStudentRankingMapper,
 } from '../../mappers/prisma-student-ranking-mapper'
-import { StudentRanking } from '@/domain/enterprise/entities/student-ranking'
+import { StudentRanking } from '@/domain/gamefication/enterprise/entities/student-ranking'
 
 @Injectable()
 export class PrismaStudentRepository implements StudentsRepository {
@@ -37,6 +37,7 @@ export class PrismaStudentRepository implements StudentsRepository {
     const student = await this.prisma.user.findUnique({
       where: {
         email,
+        role: 'USER',
       },
       include: {
         points: {
@@ -124,7 +125,7 @@ export class PrismaStudentRepository implements StudentsRepository {
     const student = await this.prisma.user.findUnique({
       where: {
         id,
-        role: 'user',
+        role: 'USER',
       },
       include: {
         points: {

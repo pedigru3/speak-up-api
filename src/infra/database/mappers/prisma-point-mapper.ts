@@ -4,7 +4,7 @@ import {
   PointCategory as PrismaPointCategory,
 } from '@prisma/client'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { Point } from '@/domain/enterprise/entities/point'
+import { Point } from '@/domain/gamefication/enterprise/entities/point'
 
 type PrismaPointWithCategory = PrismaPoint & {
   pointCategory: PrismaPointCategory

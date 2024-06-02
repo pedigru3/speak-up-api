@@ -1,5 +1,5 @@
-import { HashCompare } from '@/domain/aplication/cryptography/hash-compare'
-import { HashGenerator } from '@/domain/aplication/cryptography/hash-generator'
+import { HashCompare } from '@/domain/gamefication/aplication/cryptography/hash-compare'
+import { HashGenerator } from '@/domain/gamefication/aplication/cryptography/hash-generator'
 import { hash, compare } from 'bcryptjs'
 
 export class BcryptHasher implements HashGenerator, HashCompare {

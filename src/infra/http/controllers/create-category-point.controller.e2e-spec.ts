@@ -29,7 +29,7 @@ describe('Create Category Point (E2E)', () => {
         name: 'John Doe',
         email: 'johndoe@example.com',
         password: '123456',
-        role: 'admin',
+        role: 'ADMIN',
       },
     })
 
@@ -41,13 +41,17 @@ describe('Create Category Point (E2E)', () => {
       .send({
         text: 'You attended all week',
         value: 10,
+        point: 'chat',
       })
+
+    console.log(response.body.errors)
 
     expect(response.statusCode).toBe(201)
 
     const categoryOnDatabase = await prisma.pointCategory.findUnique({
       where: {
         text: 'You attended all week',
+        icon: 'chat',
       },
     })
 

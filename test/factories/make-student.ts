@@ -1,6 +1,9 @@
 import { faker } from '@faker-js/faker'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { Student, StudentProps } from '@/domain/enterprise/entities/student'
+import {
+  Student,
+  StudentProps,
+} from '@/domain/gamefication/enterprise/entities/student'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { Injectable } from '@nestjs/common'
 import { PrismaStudentMapper } from '@/infra/database/mappers/prisma-student-mapper'
@@ -17,6 +20,8 @@ export function makeStudent(
       daysInARow: faker.number.int({ max: 10 }),
       points: faker.number.int({ max: 20 }),
       avatar: faker.image.url(),
+      role: 'USER',
+      refreshToken: null,
       ...override,
     },
     id,

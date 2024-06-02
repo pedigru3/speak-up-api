@@ -1,12 +1,21 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { Jorney, JorneyProps } from '@/domain/enterprise/entities/jorney'
+import {
+  Journey,
+  JourneyProps,
+} from '@/domain/gamefication/enterprise/entities/jorney'
+import { PrismaJourneyMapper } from '@/infra/database/mappers/prisma-journey-mapper'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { faker } from '@faker-js/faker'
+import { Injectable } from '@nestjs/common'
 
 export function makeJorney(
-  override: Partial<JorneyProps> = {},
+  override: Partial<JourneyProps> = {},
   id?: UniqueEntityID,
 ) {
-  const jorney = Jorney.create(
+  const jorney = Journey.create(
     {
+      title: faker.lorem.sentence(),
+      description: faker.lorem.sentence(),
       maxDay: 20,
       ...override,
     },
@@ -15,17 +24,17 @@ export function makeJorney(
   return jorney
 }
 
-// @Injectable()
-// export class JorneyFaktore {
-//   constructor(private prisma: PrismaService) {}
+@Injectable()
+export class JourneyFactory {
+  constructor(private prisma: PrismaService) {}
 
-//   async makePrismaTask(data: Partial<JorneyProps> = {}): Promise<Jorney> {
-//     const jorney = makeJorney(data)
+  async makePrismaJourney(data: Partial<JourneyProps> = {}): Promise<Journey> {
+    const jorney = makeJorney(data)
 
-//     await this.prisma.task.create({
-//       data: PrismaJorneyMapper.toPrisma(jorney),
-//     })
+    await this.prisma.journey.create({
+      data: PrismaJourneyMapper.toPrisma(jorney),
+    })
 
-//     return jorney
-//   }
-// }
+    return jorney
+  }
+}

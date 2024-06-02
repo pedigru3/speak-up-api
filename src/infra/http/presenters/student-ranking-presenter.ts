@@ -1,4 +1,4 @@
-import { StudentRanking } from '@/domain/enterprise/entities/student-ranking'
+import { StudentRanking } from '@/domain/gamefication/enterprise/entities/student-ranking'
 
 export class StudentRankingPresenter {
   static toHttp(studentRanking: StudentRanking) {

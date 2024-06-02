@@ -1,5 +1,5 @@
-import { TeachersRepository } from '@/domain/aplication/repositories/teachers-repository'
-import { Teacher } from '@/domain/enterprise/entities/teacher'
+import { TeachersRepository } from '@/domain/gamefication/aplication/repositories/teachers-repository'
+import { Teacher } from '@/domain/gamefication/enterprise/entities/teacher'
 
 export class InMemoryTeachersRepository implements TeachersRepository {
   public items: Teacher[] = []
@@ -15,6 +15,11 @@ export class InMemoryTeachersRepository implements TeachersRepository {
 
   async findById(id: string): Promise<Teacher | null> {
     const item = this.items.find((item) => item.id.toString() === id)
+    return item ?? null
+  }
+
+  async findByEmail(email: string): Promise<Teacher | null> {
+    const item = this.items.find((item) => item.email === email)
     return item ?? null
   }
 }

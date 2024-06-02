@@ -1,5 +1,5 @@
-import { CategoryPointsRepository } from '@/domain/aplication/repositories/category-points-repository'
-import { CategoryPoint } from '@/domain/enterprise/entities/category-point'
+import { CategoryPointsRepository } from '@/domain/gamefication/aplication/repositories/category-points-repository'
+import { CategoryPoint } from '@/domain/gamefication/enterprise/entities/category-point'
 
 export class InMemoryCategoryPointsRepository
   implements CategoryPointsRepository
@@ -20,5 +20,10 @@ export class InMemoryCategoryPointsRepository
   async findById(id: string): Promise<CategoryPoint | null> {
     const item = this.items.find((item) => item.id.toString() === id)
     return item ?? null
+  }
+
+  async delete(category: CategoryPoint): Promise<void> {
+    const items = this.items.filter((item) => item.id.equals(category.id))
+    this.items = items
   }
 }

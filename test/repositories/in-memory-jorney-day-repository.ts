@@ -1,5 +1,5 @@
-import { JorneyDayRepository } from '@/domain/aplication/repositories/jorney-day-repository'
-import { JorneyDay } from '@/domain/enterprise/entities/jorney-day'
+import { JorneyDayRepository } from '@/domain/gamefication/aplication/repositories/jorney-day-repository'
+import { JorneyDay } from '@/domain/gamefication/enterprise/entities/jorney-day'
 
 export class InMemoryJorneyDayRepository implements JorneyDayRepository {
   public items: JorneyDay[] = []

@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common'
 import { z } from 'zod'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
-import { RegisterStudentUseCase } from '@/domain/aplication/use-cases/students/register-student'
-import { StudentAlreadyExistsError } from '@/domain/aplication/use-cases/students/errors/student-already-exists-error'
+import { RegisterStudentUseCase } from '@/domain/gamefication/aplication/use-cases/students/register-student'
+import { StudentAlreadyExistsError } from '@/domain/gamefication/aplication/use-cases/students/errors/student-already-exists-error'
 import { Public } from '@/infra/auth/public'
 
 const createAccountBodySchema = z.object({

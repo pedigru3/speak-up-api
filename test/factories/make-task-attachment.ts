@@ -1,7 +1,7 @@
 import {
   TaskAttachment,
   TaskAttachmentProps,
-} from '@/domain/enterprise/entities/task-attachment'
+} from '@/domain/gamefication/enterprise/entities/task-attachment'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
 export function makeTaskAttachment(

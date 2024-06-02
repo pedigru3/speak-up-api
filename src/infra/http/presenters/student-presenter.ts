@@ -1,4 +1,4 @@
-import { Student } from '@/domain/enterprise/entities/student'
+import { Student } from '@/domain/gamefication/enterprise/entities/student'
 
 export class StudentPresenter {
   static toHttp({ student }: { student: Student }) {

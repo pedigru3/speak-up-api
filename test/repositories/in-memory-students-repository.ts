@@ -1,6 +1,6 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
-import { StudentsRepository } from '@/domain/aplication/repositories/students-repository'
-import { Student } from '@/domain/enterprise/entities/student'
+import { StudentsRepository } from '@/domain/gamefication/aplication/repositories/students-repository'
+import { Student } from '@/domain/gamefication/enterprise/entities/student'
 
 export class InMemoryStudentsRepository implements StudentsRepository {
   public items: Student[] = []

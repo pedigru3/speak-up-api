@@ -3,7 +3,7 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { z } from 'zod'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
-import { CreateTaskUseCase } from '@/domain/aplication/use-cases/create-task'
+import { CreateTaskUseCase } from '@/domain/gamefication/aplication/use-cases/create-task'
 
 const createTaskBodySchema = z.object({
   title: z.string(),
@@ -22,6 +22,8 @@ export class CreateTaskController {
     body: CreateTaskBodySchema,
     @CurrentUser() userPayload: UserPayload,
   ) {
+    console.log(userPayload)
+
     const { content, title } = createTaskBodySchema.parse(body)
 
     const result = await this.createTask.execute({

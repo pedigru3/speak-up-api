@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { StudentRanking } from '@/domain/enterprise/entities/student-ranking'
+import { StudentRanking } from '@/domain/gamefication/enterprise/entities/student-ranking'
 
 export type PrismaStudentRanking = {
   id: string

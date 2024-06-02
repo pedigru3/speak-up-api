@@ -18,6 +18,10 @@ export class GetClassDayController {
 
   @Get()
   async handler(@Query('id') classDayId: string) {
+    if (!classDayId) {
+      return new BadRequestException('classDayId required')
+    }
+
     const result = await this.getClassDayById.execute({
       id: classDayId,
     })

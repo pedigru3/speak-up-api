@@ -2,12 +2,12 @@
 @authToken = {{authenticate.response.body.access_token}}
 
 # @name create_account
-OST {{baseUrl}}/account
+POST {{baseUrl}}/account
 Content-Type:  application/json
 
 {
   "name": "Felipe Ferreira",
-  "email": "teste@gmail.com",
+  "email": "teste3@gmail.com",
   "password": "123"
 }
 
@@ -120,3 +120,5 @@ Authorization: Bearer {{authToken}}
 GET {{baseUrl}}/classday
 Content-Type:  application/json
 Authorization: Bearer {{authToken}}
+
+

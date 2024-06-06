@@ -44,8 +44,6 @@ describe('Create Category Point (E2E)', () => {
         point: 'chat',
       })
 
-    console.log(response.body.errors)
-
     expect(response.statusCode).toBe(201)
 
     const categoryOnDatabase = await prisma.pointCategory.findUnique({

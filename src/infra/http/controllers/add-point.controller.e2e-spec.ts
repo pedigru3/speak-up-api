@@ -65,8 +65,6 @@ describe('Add point (E2E)', () => {
         studentId: student.id.toString(),
       })
 
-    console.log(response.body)
-
     const pointOnDatabase = await prisma.point.findFirst({
       where: {
         id: point.id.toString(),

@@ -6,23 +6,27 @@ import { Encrypter } from '../../cryptography/encrypter'
 import { WrongCredentialsError } from './errors/wrong-credentials-error'
 import { RefreshToken } from '@/domain/gamefication/enterprise/entities/refresh-token'
 import { RefreshTokenRepository } from '../../repositories/refresh-token-repository'
+import { $Enums } from '@prisma/client'
 
 interface AuthenticateUserUseCaseRequest {
   email: string
   password: string
 }
 
+export interface AuthControllerResponse {
+  accessToken: string
+  refreshToken: string
+  user: {
+    name: string
+    email: string
+    avatar?: string | null
+    role: $Enums.Role
+  }
+}
+
 type AuthenticateUserUseCaseResponse = Either<
   WrongCredentialsError,
-  {
-    accessToken: string
-    refreshToken: string
-    user: {
-      name: string
-      email: string
-      avatar?: string | null
-    }
-  }
+  AuthControllerResponse
 >
 
 @Injectable()
@@ -79,6 +83,7 @@ export class AuthenticateUserUseCase {
       user: {
         name: user.name,
         email,
+        role: user.role,
         avatar: user.avatar,
       },
     })

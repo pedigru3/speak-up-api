@@ -11,6 +11,8 @@ import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { z } from 'zod'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
+import { zodToOpenAPI } from 'nestjs-zod'
+import { ApiBody } from '@nestjs/swagger'
 
 const createCategoryPointBodySchema = z.object({
   text: z.string(),
@@ -31,6 +33,10 @@ const createCategoryPointBodySchema = z.object({
     .optional(),
 })
 
+const createCategoryPointBodyOpenAPI = zodToOpenAPI(
+  createCategoryPointBodySchema,
+)
+
 type CreateCategoryPointBodySchema = z.infer<
   typeof createCategoryPointBodySchema
 >
@@ -40,6 +46,7 @@ type CreateCategoryPointBodySchema = z.infer<
 export class CreateCategoryPoint {
   constructor(private prisma: PrismaService) {}
 
+  @ApiBody({ schema: createCategoryPointBodyOpenAPI })
   @Post()
   async handler(
     @Body(new ZodValidationPipe(createCategoryPointBodySchema))

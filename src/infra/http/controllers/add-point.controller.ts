@@ -10,14 +10,17 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { AddPointUseCase } from '@/domain/gamefication/aplication/use-cases/points/add-points'
 import { RolesGuard } from '@/infra/auth/roles.guard'
 import { Roles } from '@/infra/auth/roles'
+import { createZodDto } from 'nestjs-zod'
+import { ApiBearerAuth } from '@nestjs/swagger'
 
 const addPointBodySchema = z.object({
   categoryPointId: z.string(),
   studentId: z.string(),
 })
 
-type AddPointBodySchema = z.infer<typeof addPointBodySchema>
+class AddPointDto extends createZodDto(addPointBodySchema) {}
 
+@ApiBearerAuth()
 @Controller('/point')
 export class AddPointController {
   constructor(private addPoint: AddPointUseCase) {}
@@ -27,7 +30,7 @@ export class AddPointController {
   @Roles('ADMIN')
   async handler(
     @Body(new ZodValidationPipe(addPointBodySchema))
-    body: AddPointBodySchema,
+    body: AddPointDto,
   ) {
     const { categoryPointId, studentId } = addPointBodySchema.parse(body)
 

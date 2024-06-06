@@ -35,8 +35,6 @@ describe('Authenticate (E2E)', () => {
       password: '123456',
     })
 
-    console.log(response.body)
-
     expect(response.statusCode).toBe(201)
     expect(response.body).toEqual({
       access_token: expect.any(String),
@@ -44,6 +42,7 @@ describe('Authenticate (E2E)', () => {
       user: {
         name: expect.any(String),
         email: expect.any(String),
+        role: expect.any(String),
       },
     })
   })

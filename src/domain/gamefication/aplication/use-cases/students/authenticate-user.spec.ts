@@ -48,6 +48,7 @@ describe('Authenticate User', () => {
       user: {
         name: expect.any(String),
         email: expect.any(String),
+        role: expect.any(String),
       },
     })
   })

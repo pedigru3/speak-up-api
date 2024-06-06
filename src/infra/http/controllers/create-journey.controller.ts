@@ -13,14 +13,19 @@ import { CreateJourneyUseCase } from '@/domain/gamefication/aplication/use-cases
 import { NotAllowedError } from '@/domain/gamefication/aplication/use-cases/errors/not-allowed-error'
 import { JourneyPresenter } from '../presenters/journey-presenter'
 
+import { createZodDto } from 'nestjs-zod'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+
 const createJourneyBodySchema = z.object({
   title: z.string(),
   description: z.string(),
   max_day: z.number(),
 })
 
-type CreateJourneyBodySchema = z.infer<typeof createJourneyBodySchema>
+class CreateJourneyDto extends createZodDto(createJourneyBodySchema) {}
 
+@ApiTags('journey')
+@ApiBearerAuth()
 @Controller('/journey')
 export class CreateJourneyController {
   constructor(private createJourney: CreateJourneyUseCase) {}
@@ -28,7 +33,7 @@ export class CreateJourneyController {
   @Post()
   async handler(
     @Body(new ZodValidationPipe(createJourneyBodySchema))
-    body: CreateJourneyBodySchema,
+    body: CreateJourneyDto,
     @CurrentUser() userPayload: UserPayload,
   ) {
     const {

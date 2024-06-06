@@ -13,6 +13,7 @@ import { NotAllowedError } from '@/domain/gamefication/aplication/use-cases/erro
 import { Public } from '@/infra/auth/public'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
+import { ApiTags } from '@nestjs/swagger'
 
 const refreshBodySchema = z.object({
   token: z.string().uuid(),
@@ -20,6 +21,7 @@ const refreshBodySchema = z.object({
 
 type RefreshBodySchema = z.infer<typeof refreshBodySchema>
 
+@ApiTags('auth')
 @Controller('/refresh')
 @Public()
 export class RefreshController {

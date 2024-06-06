@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/repositories/pagination-params'
 import { CategoryPoint } from '@/domain/gamefication/enterprise/entities/category-point'
 
 export abstract class CategoryPointsRepository {
@@ -5,4 +6,5 @@ export abstract class CategoryPointsRepository {
   abstract save(categoryPoint: CategoryPoint): Promise<void>
   abstract findById(id: string): Promise<CategoryPoint | null>
   abstract delete(category: CategoryPoint): Promise<void>
+  abstract fetch(params: PaginationParams): Promise<CategoryPoint[]>
 }

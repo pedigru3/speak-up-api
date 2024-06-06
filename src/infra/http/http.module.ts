@@ -40,6 +40,8 @@ import { RefreshUseCase } from '@/domain/gamefication/aplication/use-cases/refre
 import { AddPointController } from './controllers/add-point.controller'
 import { ReadNotificationController } from './controllers/read-notification.controller'
 import { ReadNotificationUseCase } from '@/domain/notification/aplication/use-cases/read-notification'
+import { FetchCategoryPointsController } from './controllers/fetch-category-points.controller'
+import { FetchCategoryPointsUseCase } from '@/domain/gamefication/aplication/use-cases/fetch-category-points'
 
 @Module({
   imports: [DatabaseModule, CryptographModule, StorageModule],
@@ -63,8 +65,10 @@ import { ReadNotificationUseCase } from '@/domain/notification/aplication/use-ca
     RefreshController,
     AddPointController,
     ReadNotificationController,
+    FetchCategoryPointsController,
   ],
   providers: [
+    FetchCategoryPointsUseCase,
     ReadNotificationUseCase,
     AddPresenceUseCase,
     AddPointUseCase,

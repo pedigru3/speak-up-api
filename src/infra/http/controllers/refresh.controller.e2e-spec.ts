@@ -30,8 +30,6 @@ describe('POST Refresh (E2E)', () => {
       password: '123456',
     })
 
-    console.log(authResponse.body.refresh_token)
-
     const response = await request(app.getHttpServer())
       .post('/refresh')
       .set('Authorization', `Bearer ${authResponse.body.access_token}`)

@@ -22,8 +22,6 @@ export class CreateTaskController {
     body: CreateTaskBodySchema,
     @CurrentUser() userPayload: UserPayload,
   ) {
-    console.log(userPayload)
-
     const { content, title } = createTaskBodySchema.parse(body)
 
     const result = await this.createTask.execute({

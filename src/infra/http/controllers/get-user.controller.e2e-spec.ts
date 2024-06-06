@@ -40,8 +40,6 @@ describe('Get User (E2E)', () => {
       .query({ id: user.id })
       .set('Authorization', `Bearer ${accessToken}`)
 
-    console.log(response.body)
-
     expect(response.statusCode).toBe(200)
   })
 })

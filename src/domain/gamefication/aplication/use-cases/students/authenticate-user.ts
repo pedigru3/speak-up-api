@@ -75,7 +75,7 @@ export class AuthenticateUserUseCase {
       expiresIn: Math.floor(now.getTime() / 1000), // 7 dias,
     })
 
-    await this.refreshTokenRepository.create(refreshToken)
+    await this.refreshTokenRepository.createOrUpdate(refreshToken)
 
     return right({
       accessToken,

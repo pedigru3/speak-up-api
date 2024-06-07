@@ -37,6 +37,6 @@ describe('POST Refresh (E2E)', () => {
         token: authResponse.body.refresh_token,
       })
 
-    expect(response.statusCode).toBe(201)
+    expect(response.statusCode).toBe(200)
   })
 })

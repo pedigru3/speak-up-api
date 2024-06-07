@@ -9,7 +9,23 @@ export class InMemoryRefreshTokensRepository implements RefreshTokenRepository {
     return item ?? null
   }
 
-  async create(refreshToken: RefreshToken): Promise<void> {
-    this.items.push(refreshToken)
+  async createOrUpdate(refreshToken: RefreshToken): Promise<void> {
+    const item = this.items.find(
+      (value) => value.id.toString() === refreshToken.id.toString(),
+    )
+    if (item) {
+      this.items = this.items.filter(
+        (value) => value.id.toString() !== refreshToken.id.toString(),
+      )
+      this.items.push(
+        RefreshToken.create({
+          expiresIn: refreshToken.expiresIn,
+          role: refreshToken.role,
+          userId: refreshToken.userId,
+        }),
+      )
+    } else {
+      this.items.push(refreshToken)
+    }
   }
 }

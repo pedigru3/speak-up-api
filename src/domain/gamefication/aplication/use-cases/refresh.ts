@@ -4,7 +4,6 @@ import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { Encrypter } from '../cryptography/encrypter'
 import { RefreshToken } from '../../enterprise/entities/refresh-token'
 import { RefreshTokenRepository } from '../repositories/refresh-token-repository'
-import dayjs from 'dayjs'
 
 interface RefreshRequest {
   refreshTokenId: string
@@ -30,32 +29,33 @@ export class RefreshUseCase {
       await this.refreshTokenRepository.findById(refreshTokenId)
 
     if (!refreshToken) {
-      return left(new UnauthorizedException())
+      return left(new UnauthorizedException('Token not found'))
     }
 
-    const refreshTokenHasExpired = dayjs().isAfter(
-      dayjs.unix(refreshToken.expiresIn),
-    )
+    const todayInTimestamp = Math.floor(Date.now() / 1000)
+
+    const refreshTokenHasExpired = todayInTimestamp > refreshToken.expiresIn
 
     if (refreshTokenHasExpired) {
-      return left(new UnauthorizedException())
+      return left(new UnauthorizedException('Token has expired'))
     }
 
-    const expTime = Math.floor(Date.now() / 1000) + 60 * 60 // Token expira em 1 hora
-
     const accessToken = await this.encrypter.encrypt({
-      sub: refreshToken.id.toString(),
+      sub: refreshToken.userId.toString(),
       role: refreshToken.role,
-      exp: expTime,
+      exp: todayInTimestamp + 60 * 60, // token expires in 1 hour,
     })
 
-    const newRefreshToken = RefreshToken.create({
-      role: refreshToken.role,
-      userId: refreshToken.userId,
-      expiresIn: dayjs().add(7, 'days').unix(), // 7 dias,
-    })
+    const newRefreshToken = RefreshToken.create(
+      {
+        role: refreshToken.role,
+        userId: refreshToken.userId,
+        expiresIn: todayInTimestamp + 60 * 60 * 24 * 7, // 7 days,
+      },
+      refreshToken.id,
+    )
 
-    await this.refreshTokenRepository.create(newRefreshToken)
+    await this.refreshTokenRepository.createOrUpdate(newRefreshToken)
 
     return right({
       accessToken,

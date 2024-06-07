@@ -3,13 +3,12 @@ import { PrismaService } from '../prisma.service'
 import { RefreshTokenRepository } from '@/domain/gamefication/aplication/repositories/refresh-token-repository'
 import { RefreshToken } from '@/domain/gamefication/enterprise/entities/refresh-token'
 import { PrismaRefreshTokenMapper } from '../../mappers/prisma.refresh-token-mapper'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
 @Injectable()
 export class PrismaRefreshTokenRepository implements RefreshTokenRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create(refreshToken: RefreshToken): Promise<void> {
+  async createOrUpdate(refreshToken: RefreshToken): Promise<void> {
     await this.prisma.refreshToken.deleteMany({
       where: {
         userId: refreshToken.userId.toString(),

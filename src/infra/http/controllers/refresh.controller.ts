@@ -6,6 +6,7 @@ import {
   Post,
   UsePipes,
   Body,
+  HttpCode,
 } from '@nestjs/common'
 import { RefreshUseCase } from '@/domain/gamefication/aplication/use-cases/refresh'
 import { ResourceNotFoundError } from '@/domain/gamefication/aplication/use-cases/errors/resource-not-found-error'
@@ -28,6 +29,7 @@ export class RefreshController {
   constructor(private refreshUseCase: RefreshUseCase) {}
 
   @Post()
+  @HttpCode(200)
   @UsePipes(new ZodValidationPipe(refreshBodySchema))
   async handler(@Body() body: RefreshBodySchema) {
     const result = await this.refreshUseCase.execute({
@@ -47,7 +49,8 @@ export class RefreshController {
     }
 
     return {
-      acces_token: result.value,
+      acces_token: result.value.accessToken,
+      refresh_token: result.value.refreshToken,
     }
   }
 }

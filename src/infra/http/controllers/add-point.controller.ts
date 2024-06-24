@@ -11,7 +11,7 @@ import { AddPointUseCase } from '@/domain/gamefication/aplication/use-cases/poin
 import { RolesGuard } from '@/infra/auth/roles.guard'
 import { Roles } from '@/infra/auth/roles'
 import { createZodDto } from 'nestjs-zod'
-import { ApiBearerAuth } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 
 const addPointBodySchema = z.object({
   categoryPointId: z.string(),
@@ -20,6 +20,7 @@ const addPointBodySchema = z.object({
 
 class AddPointDto extends createZodDto(addPointBodySchema) {}
 
+@ApiTags('point')
 @ApiBearerAuth()
 @Controller('/point')
 export class AddPointController {

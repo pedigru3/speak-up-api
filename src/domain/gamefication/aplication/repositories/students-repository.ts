@@ -7,6 +7,7 @@ export abstract class StudentsRepository {
   abstract save(student: Student): Promise<void>
   abstract findById(id: string): Promise<Student | null>
   abstract findByEmail(email: string): Promise<Student | null>
+  abstract findMany(params: PaginationParams): Promise<Student[]>
   abstract findManyByRanking(
     params: PaginationParams,
     date?: string,

@@ -14,13 +14,27 @@ import { NotAllowedError } from '@/domain/gamefication/aplication/use-cases/erro
 import { Public } from '@/infra/auth/public'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
-import { ApiTags } from '@nestjs/swagger'
+import {
+  ApiOperation,
+  ApiProperty,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger'
+import { createZodDto } from 'nestjs-zod'
 
 const refreshBodySchema = z.object({
   token: z.string().uuid(),
 })
 
-type RefreshBodySchema = z.infer<typeof refreshBodySchema>
+class RefreshDto extends createZodDto(refreshBodySchema) {}
+
+class RefreshResponse {
+  @ApiProperty()
+  access_token!: string
+
+  @ApiProperty()
+  refresh_token!: string
+}
 
 @ApiTags('auth')
 @Controller('/refresh')
@@ -30,8 +44,13 @@ export class RefreshController {
 
   @Post()
   @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: RefreshResponse,
+  })
+  @ApiOperation({ summary: 'Refresh token' })
   @UsePipes(new ZodValidationPipe(refreshBodySchema))
-  async handler(@Body() body: RefreshBodySchema) {
+  async handler(@Body() body: RefreshDto): Promise<RefreshResponse> {
     const result = await this.refreshUseCase.execute({
       refreshTokenId: body.token,
     })
@@ -49,7 +68,7 @@ export class RefreshController {
     }
 
     return {
-      acces_token: result.value.accessToken,
+      access_token: result.value.accessToken,
       refresh_token: result.value.refreshToken,
     }
   }

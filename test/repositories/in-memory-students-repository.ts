@@ -34,4 +34,9 @@ export class InMemoryStudentsRepository implements StudentsRepository {
     // Retornar a lista ordenada
     return students
   }
+
+  async findMany(params: PaginationParams): Promise<Student[]> {
+    const item = this.items.slice((params.page - 1) * 20, params.page * 20)
+    return item
+  }
 }

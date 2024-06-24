@@ -42,6 +42,14 @@ import { ReadNotificationController } from './controllers/read-notification.cont
 import { ReadNotificationUseCase } from '@/domain/notification/aplication/use-cases/read-notification'
 import { FetchCategoryPointsController } from './controllers/fetch-category-points.controller'
 import { FetchCategoryPointsUseCase } from '@/domain/gamefication/aplication/use-cases/fetch-category-points'
+import { UpdateCategoryPointController } from './controllers/update-category-point.controller'
+import { UpdateCategoryPointUseCase } from '@/domain/gamefication/aplication/use-cases/points/update-category-point'
+import { DeleteCategoryPointController } from './controllers/delete-category-point.controller'
+import { DeleteCategoryPointUseCase } from '@/domain/gamefication/aplication/use-cases/points/delete-category-point'
+import { GetJourneyByIdUseCase } from '@/domain/gamefication/aplication/use-cases/jorney/get-journey'
+import { GetJourneyController } from './controllers/get-journey.controller'
+import { FetchStudentsController } from './controllers/fetch-students.controller'
+import { FetchStudentsUseCase } from '@/domain/gamefication/aplication/use-cases/students/fetch-studants'
 
 @Module({
   imports: [DatabaseModule, CryptographModule, StorageModule],
@@ -66,8 +74,15 @@ import { FetchCategoryPointsUseCase } from '@/domain/gamefication/aplication/use
     AddPointController,
     ReadNotificationController,
     FetchCategoryPointsController,
+    UpdateCategoryPointController,
+    DeleteCategoryPointController,
+    GetJourneyController,
+    FetchStudentsController,
   ],
   providers: [
+    FetchStudentsUseCase,
+    GetJourneyByIdUseCase,
+    UpdateCategoryPointUseCase,
     FetchCategoryPointsUseCase,
     ReadNotificationUseCase,
     AddPresenceUseCase,
@@ -88,6 +103,7 @@ import { FetchCategoryPointsUseCase } from '@/domain/gamefication/aplication/use
     GetInfoUseCase,
     GetUserByIdUseCase,
     UploadAndCreateAnswerUseCase,
+    DeleteCategoryPointUseCase,
   ],
 })
 export class HttpModule {}

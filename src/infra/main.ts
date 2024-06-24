@@ -17,6 +17,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('auth', 'Everything about auth')
     .addTag('journey', 'Everything about yours Journeys')
+    .addTag('point', 'Everything about points')
     .build()
 
   const document = SwaggerModule.createDocument(app, config)

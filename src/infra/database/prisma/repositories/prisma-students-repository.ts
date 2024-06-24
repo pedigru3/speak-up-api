@@ -14,6 +14,29 @@ import { StudentRanking } from '@/domain/gamefication/enterprise/entities/studen
 export class PrismaStudentRepository implements StudentsRepository {
   constructor(private prisma: PrismaService) {}
 
+  async findMany(params: PaginationParams): Promise<Student[]> {
+    const data = await this.prisma.user.findMany({
+      where: {
+        role: 'USER',
+      },
+      include: {
+        points: {
+          include: {
+            pointCategory: {
+              select: {
+                value: true,
+              },
+            },
+          },
+        },
+      },
+      take: 20,
+      skip: (params.page - 1) * 20,
+    })
+
+    return data.map(PrismaStudentMapper.toDomain)
+  }
+
   async create(student: Student): Promise<void> {
     const data = PrismaStudentMapper.toPrisma(student)
 

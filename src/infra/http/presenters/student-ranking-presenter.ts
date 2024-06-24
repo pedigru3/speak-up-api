@@ -3,7 +3,8 @@ import { StudentRanking } from '@/domain/gamefication/enterprise/entities/studen
 export class StudentRankingPresenter {
   static toHttp(studentRanking: StudentRanking) {
     return {
-      id: studentRanking.id,
+      id: studentRanking.id.toString(),
+      avatar: studentRanking.avatar,
       name: studentRanking.name,
       level: studentRanking.level,
       points: studentRanking.points,

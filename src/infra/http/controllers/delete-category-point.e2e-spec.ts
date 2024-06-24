@@ -1,23 +1,28 @@
 import { AppModule } from '@/infra/app.module'
+import { DatabaseModule } from '@/infra/database/database.module'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import { User } from '@prisma/client'
 import request from 'supertest'
+import { CategoryPointFactory } from 'test/factories/make-category-point'
 
-describe('Create ClassDay (E2E)', () => {
+describe('Delete Category Point (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let jwt: JwtService
   let teacher: User
+  let categoryFactory: CategoryPointFactory
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [AppModule, DatabaseModule],
+      providers: [CategoryPointFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
+    categoryFactory = moduleRef.get(CategoryPointFactory)
 
     prisma = moduleRef.get(PrismaService)
     jwt = moduleRef.get(JwtService)
@@ -34,53 +39,31 @@ describe('Create ClassDay (E2E)', () => {
     await app.init()
   })
 
-  it('shold be able create a classday [POST]', async () => {
-    const accessToken = jwt.sign({ sub: teacher.id })
+  it('shold be able delete a categorypoint [POST]', async () => {
+    const accessToken = jwt.sign({ sub: teacher.id, role: 'ADMIN' })
 
-    const journey = await prisma.journey.create({
-      data: {
-        title: 'New Journey',
-        description: 'Description',
-        maxDay: 16,
-      },
-    })
-
-    await request(app.getHttpServer())
-      .post('/classday')
-      .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        journey_id: journey.id,
-      })
+    const categoryPoint = await categoryFactory.makePrismaCategoryPoint()
 
     const response = await request(app.getHttpServer())
-      .post('/classday')
+      .delete(`/category-point/${categoryPoint.id.toString()}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        journey_id: journey.id,
-      })
 
-    const lastJorneyDay = await prisma.journeyDay.findFirst({
+    const categorypointOnDatabase = await prisma.pointCategory.findFirst({
       where: {
-        jorneyId: journey.id,
-      },
-      orderBy: {
-        date: 'desc',
+        id: categoryPoint.id.toString(),
       },
     })
 
-    console.log(response.body)
-
-    expect(response.status).toBe(201)
-    expect(lastJorneyDay).toBeTruthy()
-    expect(lastJorneyDay?.currentProgress).toEqual(2)
+    expect(response.status).toBe(200)
+    expect(categorypointOnDatabase).toBeNull()
   })
 
   it('shold be return status 401', async () => {
-    const response = await request(app.getHttpServer()).post('/classday').send({
-      name: 'John Doe',
-      email: 'johndoe@example.com',
-      password: '123456',
-    })
+    const categoryPoint = await categoryFactory.makePrismaCategoryPoint()
+
+    const response = await request(app.getHttpServer()).delete(
+      `/category-point/${categoryPoint.id.toString()}`,
+    )
 
     expect(response.statusCode).toBe(401)
   })

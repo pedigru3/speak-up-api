@@ -16,7 +16,7 @@ export function makeJorney(
     {
       title: faker.lorem.sentence(),
       description: faker.lorem.sentence(),
-      maxDay: 20,
+      maxDay: 16,
       ...override,
     },
     id,

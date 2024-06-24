@@ -34,7 +34,7 @@ export class InMemoryAnswersRepository implements AnswersRepository {
 
   async delete(answer: Answer): Promise<void> {
     const answers = this.answers.filter(
-      (answerFiltered) => answerFiltered.id !== answer.id,
+      (answerFiltered) => answerFiltered.id.toString() !== answer.id.toString(),
     )
 
     this.answers = answers

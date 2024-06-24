@@ -21,6 +21,18 @@ export class CategoryPoint extends Entity<CategoryPointProps> {
     return this.props.icon
   }
 
+  set icon(icon: $Enums.Icon) {
+    this.props.icon = icon
+  }
+
+  set text(description: string) {
+    this.props.text = description
+  }
+
+  set value(pointValue: number) {
+    this.props.value = pointValue
+  }
+
   static create(props: CategoryPointProps, id?: UniqueEntityID) {
     const categoryPoint = new CategoryPoint(props, id)
 

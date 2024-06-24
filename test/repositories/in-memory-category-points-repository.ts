@@ -28,7 +28,9 @@ export class InMemoryCategoryPointsRepository
   }
 
   async delete(category: CategoryPoint): Promise<void> {
-    const items = this.items.filter((item) => item.id.equals(category.id))
+    const items = this.items.filter(
+      (item) => item.id.toString() !== category.id.toString(),
+    )
     this.items = items
   }
 }

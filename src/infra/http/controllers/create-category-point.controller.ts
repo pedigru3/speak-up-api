@@ -12,7 +12,7 @@ import { z } from 'zod'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { zodToOpenAPI } from 'nestjs-zod'
-import { ApiBody } from '@nestjs/swagger'
+import { ApiBody, ApiTags } from '@nestjs/swagger'
 
 const createCategoryPointBodySchema = z.object({
   text: z.string(),
@@ -41,6 +41,7 @@ type CreateCategoryPointBodySchema = z.infer<
   typeof createCategoryPointBodySchema
 >
 
+@ApiTags('point')
 @Controller('/category-point')
 @UseGuards(JwtAuthGuard)
 export class CreateCategoryPoint {

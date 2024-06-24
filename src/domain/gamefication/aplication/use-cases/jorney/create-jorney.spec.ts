@@ -30,7 +30,7 @@ describe('Create Jorney', () => {
     const result = await sut.execute({
       title: 'New Jorney',
       description: 'description of journey',
-      maxDay: 20,
+      maxDay: 16,
       teacherId: teacher.id.toString(),
     })
 
@@ -46,7 +46,7 @@ describe('Create Jorney', () => {
     const result = await sut.execute({
       title: 'New Jorney',
       description: 'description of journey',
-      maxDay: 20,
+      maxDay: 16,
       teacherId: student.id.toString(),
     })
 

@@ -42,6 +42,10 @@ export class Card extends Entity<CardProps> {
     return this.props.nextReadAt
   }
 
+  /**
+   * Marks the card as read and updates the step.
+   * Also schedules the next read based on the current step.
+   */
   public remember(): void {
     this.props.readAt = new Date()
     if (this.props.step < Card.defaultIntervals.length - 1) {
@@ -50,6 +54,9 @@ export class Card extends Entity<CardProps> {
     this.scheduleNextRead()
   }
 
+  /**
+   * Marks the card as forgotten and updates the necessary properties.
+   */
   public forgot(): void {
     this.props.readAt = new Date()
     if (this.props.step > 0) {
@@ -58,12 +65,18 @@ export class Card extends Entity<CardProps> {
     this.props.nextReadAt = dayjs().add(20, 'minutes').toDate()
   }
 
+  /**
+   * Represents the default intervals schedules for a card.
+   */
   private static defaultIntervals: number[] = [
     1, 2, 5, 10, 30, 60, 90, 180, 365,
   ]
 
+  /**
+   * Schedule the next read for the card.
+   * This method uses a simple algorithm to calculate the next read date based on the current step.
+   */
   private scheduleNextRead(): void {
-    // Simple algorithm to schedule the next read
     const intervals = Card.defaultIntervals
     const interval = intervals[Math.min(this.step - 1, intervals.length - 1)]
     this.props.nextReadAt = new Date(

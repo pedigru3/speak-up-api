@@ -18,6 +18,10 @@ export class StudentRanking extends Entity<StudentRankingProps> {
     return this.props.points
   }
 
+  get avatar() {
+    return this.props.avatar
+  }
+
   set points(value: number) {
     this.props.points = value
   }

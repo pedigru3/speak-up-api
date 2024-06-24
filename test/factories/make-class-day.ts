@@ -15,7 +15,7 @@ export function makeClassDay(
 ) {
   const classDay = ClassDay.create(
     {
-      maxDay: 20,
+      maxDay: 16,
       jorneyId: new UniqueEntityID('1'),
       currentDay: 1,
       date: new Date(),

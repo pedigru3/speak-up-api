@@ -120,6 +120,7 @@ describe('Get Ranking (E2E)', () => {
         name: faker.person.fullName(),
         email: faker.internet.email(),
         password: faker.internet.password(),
+        avatar: faker.image.url(),
         points: {
           create: {
             pointCategoryId: pointCategory.id,
@@ -175,7 +176,19 @@ describe('Get Ranking (E2E)', () => {
       .set('Authorization', `Bearer ${accessToken}`)
       .query({ date: '2024-3' })
 
+    console.log(response.body)
+
     expect(response.statusCode).toBe(200)
     expect(response.body[0].points).toBe(3)
+    expect(response.body[0]).toEqual(
+      expect.objectContaining({
+        id: user.id,
+        name: user.name,
+        avatar: user.avatar,
+        level: expect.any(Number),
+        days_in_a_row: expect.any(Number),
+        points: 3,
+      }),
+    )
   })
 })

@@ -39,4 +39,9 @@ export class InMemoryStudentsRepository implements StudentsRepository {
     const item = this.items.slice((params.page - 1) * 20, params.page * 20)
     return item
   }
+
+  async delete(studentId: string): Promise<void> {
+    const items = this.items.filter((item) => item.id.toString() !== studentId)
+    this.items = items
+  }
 }

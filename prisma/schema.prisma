@@ -99,7 +99,7 @@ model Point {
   pointCategoryId String   @map("point_category_id")
   createdAt       DateTime @default(now()) @map("created_at")
 
-  user          User          @relation(fields: [userId], references: [id])
+  user          User          @relation(fields: [userId], onDelete: Cascade, references: [id])
   pointCategory PointCategory @relation(fields: [pointCategoryId], references: [id])
 }
 
@@ -159,7 +159,7 @@ model Presence {
   createdAt    DateTime @default(now()) @map("created_at")
 
   jorneyDay JourneyDay @relation(fields: [journeyDayId], references: [id])
-  user      User       @relation(fields: [userId], references: [id])
+  user      User       @relation(fields: [userId], onDelete: Cascade, references: [id])
 }
 
 model Notification {
@@ -171,7 +171,7 @@ model Notification {
   readAt    DateTime? @map("read_at")
   createdAt DateTime  @default(now()) @map("created_at")
 
-  recipient User @relation(fields: [recipientId], references: [id])
+  recipient User @relation(fields: [recipientId], onDelete: Cascade, references: [id])
 
   @@map("notifications")
 }

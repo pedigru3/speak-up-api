@@ -169,4 +169,12 @@ export class PrismaStudentRepository implements StudentsRepository {
 
     return PrismaStudentMapper.toDomain(student)
   }
+
+  async delete(studentId: string): Promise<void> {
+    await this.prisma.user.delete({
+      where: {
+        id: studentId,
+      },
+    })
+  }
 }

@@ -4,6 +4,7 @@ import { StudentRanking } from '@/domain/gamefication/enterprise/entities/studen
 
 export abstract class StudentsRepository {
   abstract create(student: Student): Promise<void>
+  abstract delete(studentId: string): Promise<void>
   abstract save(student: Student): Promise<void>
   abstract findById(id: string): Promise<Student | null>
   abstract findByEmail(email: string): Promise<Student | null>

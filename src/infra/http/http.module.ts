@@ -52,6 +52,8 @@ import { FetchStudentsController } from './controllers/fetch-students.controller
 import { FetchStudentsUseCase } from '@/domain/gamefication/aplication/use-cases/students/fetch-studants'
 import { CreateStudentController } from './controllers/create-student.controller'
 import { EmailModule } from '../email/email.module'
+import { DeleteStudentController } from './controllers/delete-student.controller'
+import { DeleteStudentUseCase } from '@/domain/gamefication/aplication/use-cases/students/delete-student'
 
 @Module({
   imports: [DatabaseModule, CryptographModule, StorageModule, EmailModule],
@@ -81,8 +83,10 @@ import { EmailModule } from '../email/email.module'
     GetJourneyController,
     FetchStudentsController,
     CreateStudentController,
+    DeleteStudentController,
   ],
   providers: [
+    DeleteStudentUseCase,
     FetchStudentsUseCase,
     GetJourneyByIdUseCase,
     UpdateCategoryPointUseCase,

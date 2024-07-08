@@ -27,9 +27,10 @@ import { NotificationsRepository } from '@/domain/notification/aplication/reposi
 import { PrismaNotificationsRepository } from './prisma/repositories/prisma-notifications-repository'
 import { CategoryPointsRepository } from '@/domain/gamefication/aplication/repositories/category-points-repository'
 import { PrismaCategoryPointsRepository } from './prisma/repositories/prisma-category-points-repository'
+import { EnvModule } from '../env/env.module'
 
 @Module({
-  imports: [CacheModule],
+  imports: [CacheModule, EnvModule],
   providers: [
     PrismaService,
     { provide: TasksRepository, useClass: PrismaTasksRepository },

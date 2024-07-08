@@ -6,7 +6,7 @@ export class ClassDayPresenter {
       id: classDay.id.toString(),
       current_day: classDay.currentDay,
       students_presents_ids: classDay.attendanceList.currentItems.map(
-        (attendence) => attendence.studentId,
+        (attendence) => attendence.studentId.toString(),
       ),
     }
   }

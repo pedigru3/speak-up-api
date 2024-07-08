@@ -22,8 +22,6 @@ describe('Refresh Token', () => {
       refreshTokenId: refreshTokenCreated.id.toString(),
     })
 
-    console.log(response.value)
-
     expect(response.isright()).toBeTruthy()
     expect(response.value).toEqual({
       accessToken: expect.any(String),

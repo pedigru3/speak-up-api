@@ -1,4 +1,5 @@
 import { AppModule } from '@/infra/app.module'
+import { DatabaseModule } from '@/infra/database/database.module'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
 import { INestApplication } from '@nestjs/common'
@@ -7,21 +8,32 @@ import { Test } from '@nestjs/testing'
 import { randomUUID } from 'crypto'
 import dayjs from 'dayjs'
 import request from 'supertest'
+import { CategoryPointFactory } from 'test/factories/make-category-point'
+import { PointFactory } from 'test/factories/make-point'
+import { StudentFactory } from 'test/factories/make-student'
 import { vi } from 'vitest'
 
 describe('Get Ranking (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
+  let studentFactory: StudentFactory
+  let pointFactory: PointFactory
+  let categoryFactory: CategoryPointFactory
+
   let jwt: JwtService
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [AppModule, DatabaseModule],
+      providers: [StudentFactory, PointFactory, CategoryPointFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
 
     prisma = moduleRef.get(PrismaService)
+    studentFactory = moduleRef.get(StudentFactory)
+    pointFactory = moduleRef.get(PointFactory)
+    categoryFactory = moduleRef.get(CategoryPointFactory)
     jwt = moduleRef.get(JwtService)
 
     await app.init()
@@ -33,40 +45,20 @@ describe('Get Ranking (E2E)', () => {
   })
 
   it('[GET] /ranking', async () => {
-    const user = await prisma.user.create({
-      data: {
-        name: faker.person.fullName(),
-        email: faker.internet.email(),
-        password: faker.internet.password(),
-        points: {
-          create: {
-            pointCategory: {
-              create: {
-                text: 'qualquer',
-                value: 100,
-              },
-            },
-          },
-        },
-      },
+    const user = await studentFactory.makePrismaStudent({
+      points: 100,
+      name: 'Felipe',
     })
 
-    await prisma.user.create({
-      data: {
-        name: 'John Doe 2',
-        email: 'johndoe2@example.com',
-        password: '123456',
-        points: {
-          create: {
-            pointCategory: {
-              create: {
-                text: 'qualquer um',
-                value: 0,
-              },
-            },
-          },
-        },
-      },
+    await studentFactory.makePrismaStudent()
+
+    const category = await categoryFactory.makePrismaCategoryPoint({
+      value: 100,
+    })
+    await pointFactory.makePrismaPoint({
+      studentId: user.id,
+      pointCategoryId: category.id,
+      value: 100,
     })
 
     const usersData = Array.from({ length: 18 }, () => ({
@@ -94,13 +86,14 @@ describe('Get Ranking (E2E)', () => {
 
     await Promise.all(userCreations)
 
-    const accessToken = jwt.sign({ sub: user.id })
+    const accessToken = jwt.sign({ sub: user.id.toString() })
 
     const response = await request(app.getHttpServer())
       .get('/ranking')
       .set('Authorization', `Bearer ${accessToken}`)
 
     expect(response.statusCode).toBe(200)
+    expect(response.body).toHaveLength(20)
     expect(response.body[0].points).toBe(100)
     expect(response.body[19].points).toBe(0)
   })
@@ -175,8 +168,6 @@ describe('Get Ranking (E2E)', () => {
       .get('/ranking')
       .set('Authorization', `Bearer ${accessToken}`)
       .query({ date: '2024-3' })
-
-    console.log(response.body)
 
     expect(response.statusCode).toBe(200)
     expect(response.body[0].points).toBe(3)

@@ -15,6 +15,7 @@ interface EditClassDayUseCaseRequest {
   teacherId: string
   classDayId: string
   studentsIds: string[]
+  categoryPointId?: string
 }
 
 type EditClassDayUseCaseResponse = Either<NotAllowedError, ClassDay>
@@ -31,6 +32,7 @@ export class EditClassDayUseCase {
   async execute({
     teacherId,
     classDayId,
+    categoryPointId,
     studentsIds,
   }: EditClassDayUseCaseRequest): Promise<EditClassDayUseCaseResponse> {
     const teacher = await this.teachersRepository.findById(teacherId)
@@ -66,6 +68,7 @@ export class EditClassDayUseCase {
         const result = await this.addPresence.execute({
           classDayId: item.classDayId.toString(),
           studentId: item.studentId.toString(),
+          categoryPointId,
         })
 
         if (result.isLeft()) {

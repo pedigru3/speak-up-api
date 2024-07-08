@@ -50,4 +50,32 @@ export class ClassDay extends AggregateRoot<ClassDayProps> {
     )
     return day
   }
+
+  toJson() {
+    return JSON.stringify({
+      id: this.id.toString(),
+      jorneyId: this.jorneyId.toString(),
+      currentDay: this.currentDay,
+      maxDay: this.maxDay,
+      date: this.date,
+      classDayStudentList: this.attendanceList.toJson(),
+    })
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  static fromJSON(datajson: any) {
+    const data = JSON.parse(datajson)
+    return ClassDay.create(
+      {
+        jorneyId: new UniqueEntityID(data.jorneyId),
+        currentDay: data.currentDay,
+        maxDay: data.maxDay,
+        date: new Date(data.date),
+        classDayStudentList: ClassDayStudentList.fromJson(
+          data.classDayStudentList,
+        ),
+      },
+      new UniqueEntityID(data.id),
+    )
+  }
 }

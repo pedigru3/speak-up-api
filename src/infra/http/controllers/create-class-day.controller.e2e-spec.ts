@@ -68,8 +68,6 @@ describe('Create ClassDay (E2E)', () => {
       },
     })
 
-    console.log(response.body)
-
     expect(response.status).toBe(201)
     expect(lastJorneyDay).toBeTruthy()
     expect(lastJorneyDay?.currentProgress).toEqual(2)

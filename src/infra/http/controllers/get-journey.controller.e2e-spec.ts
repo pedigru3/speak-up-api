@@ -48,7 +48,5 @@ describe('Get Journey (E2E)', () => {
       .set('Authorization', `Bearer ${accessToken}`)
 
     expect(response.statusCode).toBe(200)
-
-    console.log(response.body)
   })
 })

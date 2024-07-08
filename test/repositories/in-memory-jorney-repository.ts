@@ -21,4 +21,9 @@ export class InMemoryJorneyRepository implements JourneysRepository {
 
     return journeys
   }
+
+  async update(journey: Journey): Promise<void> {
+    const index = this.items.findIndex((item) => item.id.equals(journey.id))
+    this.items[index] = journey
+  }
 }

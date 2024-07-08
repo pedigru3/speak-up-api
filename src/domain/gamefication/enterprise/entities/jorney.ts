@@ -36,6 +36,14 @@ export class Journey extends AggregateRoot<JourneyProps> {
     return this.props.description
   }
 
+  set title(title: string) {
+    this.props.title = title
+  }
+
+  set description(description: string) {
+    this.props.description = description
+  }
+
   set classDays(classDay: ClassDay[]) {
     this.props.classDays = classDay
   }

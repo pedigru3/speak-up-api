@@ -56,8 +56,6 @@ describe('Edit categorypoint (E2E)', () => {
       },
     })
 
-    console.log(data)
-
     expect(data?.text).toBe('Test')
   })
 })

@@ -52,9 +52,6 @@ export class UpdateCategoryPointUseCase {
     categoryPoint.value = value
     categoryPoint.text = text
 
-    console.log('categoryPoint')
-    console.log(categoryPoint)
-
     await this.categoryPointsRepository.save(categoryPoint)
 
     return right({})

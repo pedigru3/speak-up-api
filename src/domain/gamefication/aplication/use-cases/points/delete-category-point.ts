@@ -18,17 +18,12 @@ export class DeleteCategoryPointUseCase {
   async execute({
     categorypointId,
   }: DeleteCategoryPointUseCaseRequest): Promise<DeleteCategoryPointUseCaseResponse> {
-    console.log('oi')
     const categorypoint =
       await this.categorypointRepository.findById(categorypointId)
-
-    console.log('oi2')
 
     if (!categorypoint) {
       return left(new ResourceNotFoundError())
     }
-
-    console.log('oi3')
 
     await this.categorypointRepository.delete(categorypoint)
 

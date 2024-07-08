@@ -48,4 +48,16 @@ export class PrismaJourneysRepository implements JourneysRepository {
 
     return answers.map(PrismaJourneyMapper.toDomain)
   }
+
+  async update(journey: Journey): Promise<void> {
+    await this.prisma.journey.update({
+      where: {
+        id: journey.id.toString(),
+      },
+      data: {
+        title: journey.title,
+        description: journey.description,
+      },
+    })
+  }
 }

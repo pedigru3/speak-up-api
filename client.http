@@ -121,4 +121,12 @@ GET {{baseUrl}}/classday
 Content-Type:  application/json
 Authorization: Bearer {{authToken}}
 
+###
+
+# @name get_teacher
+GET {{baseUrl}}/teacher
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+
+
 

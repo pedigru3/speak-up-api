@@ -22,6 +22,7 @@ import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 const updateClassDayBodySchema = z.object({
   classDayId: z.string().uuid(),
   studentsIds: z.array(z.string()),
+  categoryPointId: z.string().optional(),
 })
 
 type UpdateClassDayBodySchema = z.infer<typeof updateClassDayBodySchema>
@@ -40,12 +41,13 @@ export class UpdateClassDayController {
   ) {
     const teacherId = userPayload.sub
 
-    const { studentsIds, classDayId } = body
+    const { studentsIds, classDayId, categoryPointId } = body
 
     const result = await this.editClassDay.execute({
       studentsIds,
       classDayId,
       teacherId,
+      categoryPointId,
     })
 
     if (result.isLeft()) {

@@ -124,13 +124,15 @@ export class PrismaStudentRepository implements StudentsRepository {
           u.name,
           u.avatar,
           u.days_in_a_row,
-          SUM(pc.value) AS total_points
+          COALESCE(SUM(pc.value), 0) AS total_points
       FROM
           users u
-      JOIN
+      LEFT JOIN
           "Point" p ON u.id = p.user_id
-      JOIN
+      LEFT JOIN
           points_categories pc ON p.point_category_id = pc.id
+      WHERE
+          u.role = 'USER'
       GROUP BY
           u.id, u.name, u.avatar, u.days_in_a_row
       ORDER BY
@@ -140,6 +142,7 @@ export class PrismaStudentRepository implements StudentsRepository {
       LIMIT
       20;
     `
+
       return students.map(PrismaStudentRankingMapper.toDomain)
     }
   }

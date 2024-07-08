@@ -25,7 +25,7 @@ export class PrismaClassDaysRepository implements ClassDayRepository {
     const cacheHit = await this.cache.get(`classday:${id}`)
 
     if (cacheHit) {
-      const cacheData = JSON.parse(cacheHit)
+      const cacheData: ClassDay = ClassDay.fromJSON(cacheHit)
 
       return cacheData
     }
@@ -49,7 +49,7 @@ export class PrismaClassDaysRepository implements ClassDayRepository {
 
     const classDayEntity = PrismaClassDayMapper.toDomain(classday)
 
-    await this.cache.set(`classday:${id}`, JSON.stringify(classDayEntity))
+    await this.cache.set(`classday:${id}`, classDayEntity.toJson())
 
     return classDayEntity
   }

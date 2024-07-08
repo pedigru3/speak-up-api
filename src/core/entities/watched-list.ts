@@ -1,3 +1,5 @@
+import { from } from 'rxjs'
+
 export abstract class WatchedList<T> {
   public currentItems: T[]
   private initial: T[]

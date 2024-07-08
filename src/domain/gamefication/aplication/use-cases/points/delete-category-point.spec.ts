@@ -19,13 +19,9 @@ describe('Delete CategoryPoint', () => {
 
     await inMemoryCategoryPointsRepository.create(newCategoryPoint)
 
-    console.log(inMemoryCategoryPointsRepository.items)
-
     await sut.execute({
       categorypointId: 'categorypoint-1',
     })
-
-    console.log(inMemoryCategoryPointsRepository.items)
 
     expect(inMemoryCategoryPointsRepository.items).toHaveLength(0)
   })

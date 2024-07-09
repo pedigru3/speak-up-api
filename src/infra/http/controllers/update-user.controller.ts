@@ -17,8 +17,8 @@ import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard'
 import { z } from 'zod'
 import { EditStudentUseCase } from '@/domain/gamefication/aplication/use-cases/students/edit-student'
 import { ResourceNotFoundError } from '@/domain/gamefication/aplication/use-cases/errors/resource-not-found-error'
-import { StudentPresenter } from '../presenters/student-presenter'
 import { InvalidAttachmentTypeError } from '@/domain/gamefication/aplication/use-cases/errors/invalid-attachment-type-error'
+import { UserPresenter } from '../presenters/user-presenter'
 
 const updateUserBodySchema = z.object({
   name: z.string().optional(),
@@ -54,7 +54,7 @@ export class UpdateUserController {
     const { email, name } = body
 
     const result = await this.editStudents.execute({
-      studentId,
+      userId: studentId,
       email,
       name,
       file: file
@@ -78,6 +78,6 @@ export class UpdateUserController {
       }
     }
 
-    return StudentPresenter.toHttp({ student: result.value })
+    return UserPresenter.toHttp({ user: result.value })
   }
 }

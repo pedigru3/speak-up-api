@@ -19,7 +19,7 @@ describe('Edit Student', () => {
     inMemoryStudentsRepository.create(student)
 
     const result = await sut.execute({
-      studentId: 'student-1',
+      userId: 'student-1',
       file: {
         buffer: Buffer.from(''),
         mimetype: 'image/jpg',

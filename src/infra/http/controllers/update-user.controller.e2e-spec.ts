@@ -6,7 +6,7 @@ import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { StudentFactory } from 'test/factories/make-student'
 
-describe.skip('Edit student (E2E)', () => {
+describe('Edit student (E2E)', () => {
   let app: INestApplication
   let studentFactory: StudentFactory
 

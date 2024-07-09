@@ -8,6 +8,7 @@ export class PrismaUserMapper {
       {
         name: raw.name,
         email: raw.email,
+        avatar: raw.avatar,
         password: raw.password,
         role: raw.role,
       },
@@ -18,6 +19,7 @@ export class PrismaUserMapper {
   static toPrisma(user: User): Prisma.UserUncheckedCreateInput {
     return {
       id: user.id.toString(),
+      avatar: user.avatar,
       email: user.email,
       name: user.name,
       password: user.password,

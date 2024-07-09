@@ -41,6 +41,18 @@ export class User<T extends UserProps = UserProps> extends Entity<T> {
     return this.props.refreshToken
   }
 
+  set name(name: string) {
+    this.props.name = name
+  }
+
+  set email(email: string) {
+    this.props.email = email
+  }
+
+  set avatar(avatar: string | undefined | null) {
+    this.props.avatar = avatar
+  }
+
   set refreshToken(refreshToken: RefreshToken | null) {
     this.props.refreshToken = refreshToken
   }

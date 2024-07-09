@@ -1,13 +1,13 @@
 import { Either, left, right } from '@/core/either'
-import { StudentsRepository } from '../../repositories/students-repository'
 import { Uploader } from '../../storage/uploader'
 import { ResourceNotFoundError } from '../errors/resource-not-found-error'
-import { Student } from '@/domain/gamefication/enterprise/entities/student'
 import { Injectable } from '@nestjs/common'
 import { InvalidAttachmentTypeError } from '../errors/invalid-attachment-type-error'
+import { UsersRepository } from '../../repositories/users-repository'
+import { User } from '@/domain/gamefication/enterprise/entities/user'
 
 interface EditStudentUseCaseRequest {
-  studentId: string
+  userId: string
   name?: string
   email?: string
   file?: {
@@ -17,24 +17,24 @@ interface EditStudentUseCaseRequest {
   }
 }
 
-type EditStudentUseCaseResponse = Either<ResourceNotFoundError, Student>
+type EditStudentUseCaseResponse = Either<ResourceNotFoundError, User>
 
 @Injectable()
 export class EditStudentUseCase {
   constructor(
-    private studentsRepository: StudentsRepository,
+    private usersRepository: UsersRepository,
     private uploader: Uploader,
   ) {}
 
   async execute({
-    studentId,
+    userId,
     file,
     email,
     name,
   }: EditStudentUseCaseRequest): Promise<EditStudentUseCaseResponse> {
-    const student = await this.studentsRepository.findById(studentId)
+    const user = await this.usersRepository.findById(userId)
 
-    if (!student) {
+    if (!user) {
       return left(new ResourceNotFoundError())
     }
 
@@ -52,27 +52,27 @@ export class EditStudentUseCase {
         newType = 'image/png'
       }
 
-      if (student.avatar) {
-        await this.uploader.delete(student.avatar)
+      if (user.avatar) {
+        await this.uploader.delete(user.avatar)
       }
       const { url } = await this.uploader.upload({
         body: file.buffer,
         fileName: file.originalname,
         fileType: newType,
       })
-      student.avatar = url
+      user.avatar = url
     }
 
     if (name) {
-      student.name = name
+      user.name = name
     }
 
     if (email) {
-      student.email = email
+      user.email = email
     }
 
-    await this.studentsRepository.save(student)
+    await this.usersRepository.save(user)
 
-    return right(student)
+    return right(user)
   }
 }

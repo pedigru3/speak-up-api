@@ -8,6 +8,12 @@ import { PrismaTeacherMapper } from '../../mappers/prisma-teacher-mapper'
 export class PrismaTeacherRepository implements TeachersRepository {
   constructor(private prisma: PrismaService) {}
 
+  async create(teacher: Teacher): Promise<void> {
+    await this.prisma.user.create({
+      data: PrismaTeacherMapper.toPrisma(teacher),
+    })
+  }
+
   async findById(id: string): Promise<Teacher | null> {
     const teacher = await this.prisma.user.findUnique({
       where: {

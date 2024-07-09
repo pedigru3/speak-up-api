@@ -1,4 +1,7 @@
-import { UploadParams, Uploader } from '@/domain/gamefication/aplication/storage/uploader'
+import {
+  UploadParams,
+  Uploader,
+} from '@/domain/gamefication/aplication/storage/uploader'
 import { randomUUID } from 'crypto'
 
 interface Upload {

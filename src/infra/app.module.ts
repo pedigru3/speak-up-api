@@ -9,6 +9,9 @@ import { EnvService } from './env/env.service'
 import { EventsModule } from './events/events.module'
 import { EmailModule } from './email/email.module'
 import { PrismaService } from './database/prisma/prisma.service'
+import { RegisterTeacherUseCase } from '@/domain/gamefication/aplication/use-cases/students/register-teatcher'
+import { DatabaseModule } from './database/database.module'
+import { CryptographModule } from './cryptograph/cryptograph.module'
 
 @Module({
   imports: [
@@ -24,12 +27,15 @@ import { PrismaService } from './database/prisma/prisma.service'
     HttpModule,
     EventsModule,
     EmailModule,
+    DatabaseModule,
+    CryptographModule,
   ],
-  providers: [EnvService, PrismaService],
+  providers: [EnvService, PrismaService, RegisterTeacherUseCase],
 })
 export class AppModule implements OnModuleInit {
   constructor(
     private envService: EnvService,
+    private registerTeacher: RegisterTeacherUseCase,
     private prismaService: PrismaService,
   ) {}
 
@@ -41,13 +47,10 @@ export class AppModule implements OnModuleInit {
     const hasUsers = users._count > 0
 
     if (!hasUsers) {
-      await this.prismaService.user.create({
-        data: {
-          email: this.envService.get('ADMIN_EMAIL'),
-          password: this.envService.get('ADMIN_PASSWORD'),
-          role: 'ADMIN',
-          name: 'Admin',
-        },
+      await this.registerTeacher.execute({
+        name: 'admin',
+        email: this.envService.get('ADMIN_EMAIL'),
+        password: this.envService.get('ADMIN_PASSWORD'),
       })
     }
   }

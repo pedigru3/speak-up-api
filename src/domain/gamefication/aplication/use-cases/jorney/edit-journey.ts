@@ -30,6 +30,8 @@ export class EditJourneyUseCase {
     journey.title = title
     journey.description = description
 
+    await this.jorneyRepository.update(journey)
+
     return right(journey)
   }
 }

@@ -5,11 +5,13 @@ import { Test } from '@nestjs/testing'
 import { JourneyFactory } from 'test/factories/make-jorney'
 import request from 'supertest'
 import { INestApplication } from '@nestjs/common'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
 
 describe('Edit Journey', () => {
   let app: INestApplication
   let journeyFactory: JourneyFactory
   let jwt: JwtService
+  let prisma: PrismaService
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -18,6 +20,7 @@ describe('Edit Journey', () => {
     }).compile()
 
     app = moduleRef.createNestApplication()
+    prisma = moduleRef.get(PrismaService)
 
     journeyFactory = moduleRef.get(JourneyFactory)
     jwt = moduleRef.get(JwtService)
@@ -48,6 +51,18 @@ describe('Edit Journey', () => {
       class_days_ids: [],
       created_at: expect.any(String),
       current_day: expect.any(Number),
+    })
+
+    const updatedJourney = await prisma.journey.findUnique({
+      where: { id: journey.id.toString() },
+    })
+
+    expect(updatedJourney).toEqual({
+      id: journey.id.toString(),
+      title: 'New title',
+      description: 'New description',
+      maxDay: expect.any(Number),
+      createdAt: expect.any(Date),
     })
   })
 })

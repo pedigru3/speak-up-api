@@ -42,6 +42,7 @@ export class UpdateUserController {
             maxSize: 1024 * 1024 * 2, // 2mb
           }),
         ],
+        fileIsRequired: false,
       }),
     )
     file: Express.Multer.File | undefined,

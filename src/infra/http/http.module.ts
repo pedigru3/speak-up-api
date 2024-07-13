@@ -58,6 +58,7 @@ import { GetTeacherController } from './controllers/get-teacher.controller'
 import { UpdateJourneyController } from './controllers/update-journey.controller'
 import { EditJourneyUseCase } from '@/domain/gamefication/aplication/use-cases/jorney/edit-journey'
 import { DeleteJourneyController } from './controllers/delete-journey.controller'
+import { SharpService } from '../resize/sharp.service'
 
 @Module({
   imports: [DatabaseModule, CryptographModule, StorageModule, EmailModule],
@@ -119,6 +120,7 @@ import { DeleteJourneyController } from './controllers/delete-journey.controller
     GetUserByIdUseCase,
     UploadAndCreateAnswerUseCase,
     DeleteCategoryPointUseCase,
+    SharpService,
   ],
 })
 export class HttpModule {}

@@ -19,6 +19,7 @@ import { EditStudentUseCase } from '@/domain/gamefication/aplication/use-cases/s
 import { ResourceNotFoundError } from '@/domain/gamefication/aplication/use-cases/errors/resource-not-found-error'
 import { InvalidAttachmentTypeError } from '@/domain/gamefication/aplication/use-cases/errors/invalid-attachment-type-error'
 import { UserPresenter } from '../presenters/user-presenter'
+import { SharpService } from '@/infra/resize/sharp.service'
 
 const updateUserBodySchema = z.object({
   name: z.string().optional(),
@@ -30,7 +31,10 @@ type UpdateUserBodySchema = z.infer<typeof updateUserBodySchema>
 @Controller('/user')
 @UseGuards(JwtAuthGuard)
 export class UpdateUserController {
-  constructor(private editStudents: EditStudentUseCase) {}
+  constructor(
+    private editStudents: EditStudentUseCase,
+    private sharpService: SharpService,
+  ) {}
 
   @Patch()
   @UseInterceptors(FileInterceptor('avatar'))
@@ -54,13 +58,22 @@ export class UpdateUserController {
 
     const { email, name } = body
 
+    let sharpedImage: Buffer | undefined
+
+    if (file) {
+      sharpedImage = await this.sharpService
+        .edit(file?.buffer)
+        .resize(150, 150)
+        .toBuffer()
+    }
+
     const result = await this.editStudents.execute({
       userId: studentId,
       email,
       name,
       file: file
         ? {
-            buffer: file.buffer,
+            buffer: sharpedImage!,
             mimetype: file.mimetype,
             originalname: file.originalname,
           }

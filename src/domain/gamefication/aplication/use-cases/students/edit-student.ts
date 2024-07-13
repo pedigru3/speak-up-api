@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common'
 import { InvalidAttachmentTypeError } from '../errors/invalid-attachment-type-error'
 import { UsersRepository } from '../../repositories/users-repository'
 import { User } from '@/domain/gamefication/enterprise/entities/user'
+import sharp from 'sharp'
 
 interface EditStudentUseCaseRequest {
   userId: string
@@ -55,8 +56,13 @@ export class EditStudentUseCase {
       if (user.avatar) {
         await this.uploader.delete(user.avatar)
       }
+
+      // reside with sharp
+
+      const sharpedImage = await sharp(file.buffer).resize(150, 150).toBuffer()
+
       const { url } = await this.uploader.upload({
-        body: file.buffer,
+        body: sharpedImage,
         fileName: file.originalname,
         fileType: newType,
       })

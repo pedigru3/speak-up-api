@@ -8,6 +8,8 @@ export class InMemoryPointsRepository implements PointsRepository {
   async create(point: Point): Promise<void> {
     this.items.push(point)
 
+    console.log('Point created', point)
+
     DomainEvents.dispatchEventsForAggregate(point.id)
   }
 

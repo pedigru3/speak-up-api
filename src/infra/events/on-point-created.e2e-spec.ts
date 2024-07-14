@@ -49,7 +49,10 @@ describe('On created point (E2E)', () => {
 
   it('shold be send a notification when point is created', async () => {
     const teacher = await teacherFactory.makePrismaTeacher()
-    const accessToken = jwt.sign({ sub: teacher.id.toString() })
+    const accessToken = jwt.sign({
+      sub: teacher.id.toString(),
+      role: teacher.role,
+    })
 
     const student = await studentFactory.makePrismaStudent()
     const categoryPoint = await categoryPointFactory.makePrismaCategoryPoint()
@@ -59,7 +62,7 @@ describe('On created point (E2E)', () => {
       pointCategoryId: categoryPoint.id,
     })
 
-    await request(app.getHttpServer())
+    const response = await request(app.getHttpServer())
       .post('/point')
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
@@ -67,12 +70,14 @@ describe('On created point (E2E)', () => {
         studentId: student.id.toString(),
       })
 
+    console.log(response.body)
+
     await waitFor(async () => {
-      const notifactionOnDatabase = await prisma.notification.findFirst({
+      const notificationOnDatabase = await prisma.notification.findFirst({
         where: { recipientId: student.id.toString() },
       })
 
-      expect(notifactionOnDatabase).not.toBeNull()
+      expect(notificationOnDatabase).not.toBeNull()
     })
   })
 })

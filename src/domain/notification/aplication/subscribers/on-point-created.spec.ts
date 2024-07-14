@@ -35,7 +35,7 @@ describe('On Point Created', () => {
 
   it('should  send a notification when a point is created', async () => {
     const categoryPoint = CategoryPoint.create({
-      icon: 'icon',
+      icon: 'appointment',
       text: 'text',
       value: 10,
     })

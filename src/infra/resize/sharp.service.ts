@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import sharp = require('sharp')
+import sharp from 'sharp'
 
 @Injectable()
 export class SharpService {

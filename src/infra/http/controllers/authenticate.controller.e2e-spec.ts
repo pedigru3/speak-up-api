@@ -43,6 +43,7 @@ describe('Authenticate (E2E)', () => {
         name: expect.any(String),
         email: expect.any(String),
         role: expect.any(String),
+        avatar: null,
       },
     })
   })

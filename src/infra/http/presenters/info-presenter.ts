@@ -18,7 +18,12 @@ export class InfoPresenter {
       level: student.level,
       points: student.points,
       last_points: lastPoints.map((point) => {
-        return { text: point.text, value: point.value }
+        return {
+          id: point.id.toString(),
+          text: point.text,
+          value: point.value,
+          icon: point.icon,
+        }
       }),
     }
   }

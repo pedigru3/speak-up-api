@@ -3,10 +3,14 @@ import { PrismaService } from '../prisma.service'
 import { NotificationsRepository } from '@/domain/notification/aplication/repositories/notifications-repository'
 import { PrismaNotificationMapper } from '../../mappers/prisma-notification-mapper'
 import { Notification } from '@/domain/notification/enterprise/entities/notification'
+import { NotificationService } from '@/infra/notifications/notification.service'
 
 @Injectable()
 export class PrismaNotificationsRepository implements NotificationsRepository {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private notificationService: NotificationService,
+  ) {}
 
   async create(notification: Notification): Promise<void> {
     const data = PrismaNotificationMapper.toPrisma(notification)
@@ -14,6 +18,8 @@ export class PrismaNotificationsRepository implements NotificationsRepository {
     await this.prisma.notification.create({
       data,
     })
+
+    await this.notificationService.send(notification)
   }
 
   async save(notification: Notification): Promise<void> {

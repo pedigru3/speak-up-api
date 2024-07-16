@@ -23,6 +23,7 @@ model User {
   role          Role          @default(USER)
   avatar        String?
   daysInARow    Int           @default(0) @map("days_in_a_row")
+  deviceToken   String?       @map("device_token")
   refresh_token RefreshToken?
 
   points        Point[]

@@ -24,8 +24,6 @@ export class GetInfoController {
       studentId: userPayload.sub,
     })
 
-    console.log('testing')
-
     if (result.isLeft()) {
       const error = result.value
       switch (error.constructor) {

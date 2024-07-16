@@ -28,9 +28,11 @@ import { PrismaNotificationsRepository } from './prisma/repositories/prisma-noti
 import { CategoryPointsRepository } from '@/domain/gamefication/aplication/repositories/category-points-repository'
 import { PrismaCategoryPointsRepository } from './prisma/repositories/prisma-category-points-repository'
 import { EnvModule } from '../env/env.module'
+import { NotificationService } from '../notifications/notification.service'
+import { HttpModule } from '@nestjs/axios'
 
 @Module({
-  imports: [CacheModule, EnvModule],
+  imports: [CacheModule, EnvModule, HttpModule],
   providers: [
     PrismaService,
     { provide: TasksRepository, useClass: PrismaTasksRepository },
@@ -59,6 +61,7 @@ import { EnvModule } from '../env/env.module'
     },
     PrismaTasksAttachmentsRepository,
     PrismaAnswersCommentsRepository,
+    NotificationService,
   ],
   exports: [
     PrismaService,
@@ -76,6 +79,7 @@ import { EnvModule } from '../env/env.module'
     PrismaAnswersCommentsRepository,
     NotificationsRepository,
     CategoryPointsRepository,
+    NotificationService,
   ],
 })
 export class DatabaseModule {}

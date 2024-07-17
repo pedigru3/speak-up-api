@@ -43,7 +43,7 @@ export class RefreshUseCase {
     const accessToken = await this.encrypter.encrypt({
       sub: refreshToken.userId.toString(),
       role: refreshToken.role,
-      exp: todayInTimestamp + 60 * 60, // token expires in 1 hour,
+      exp: todayInTimestamp + 60 * 60 * 24, // 24 hours
     })
 
     const newRefreshToken = RefreshToken.create(

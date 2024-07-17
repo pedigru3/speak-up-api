@@ -14,12 +14,14 @@ import { ClassDayStudentList } from '@/domain/gamefication/enterprise/entities/c
 import { ClassDayStudent } from '@/domain/gamefication/enterprise/entities/class-day-student'
 import { makeStudent } from 'test/factories/make-student'
 import { InMemoryCategoryPointsRepository } from 'test/repositories/in-memory-category-points-repository'
+import { InMemoryPointsRepository } from 'test/repositories/in-memory-points.repository'
 
 let inMemoryClassDaysRepository: InMemoryClassDayRepository
 let inMemoryTeachersRepository: InMemoryTeachersRepository
 let inMemoryStudentsRepository: InMemoryStudentsRepository
 let inMemoryClassDayStudentsRepository: InMemoryClassDayStudentsRepository
 let inMemoryCategoryPointsRepository: InMemoryCategoryPointsRepository
+let inMemoryPointsRepository: InMemoryPointsRepository
 let addPointUseCase: AddPointUseCase
 let addPresenceUseCase: AddPresenceUseCase
 
@@ -30,12 +32,14 @@ describe('Edit ClassDay', () => {
     inMemoryTeachersRepository = new InMemoryTeachersRepository()
     inMemoryClassDaysRepository = new InMemoryClassDayRepository()
     inMemoryStudentsRepository = new InMemoryStudentsRepository()
+    inMemoryPointsRepository = new InMemoryPointsRepository()
     inMemoryClassDayStudentsRepository =
       new InMemoryClassDayStudentsRepository()
     inMemoryCategoryPointsRepository = new InMemoryCategoryPointsRepository()
 
     addPointUseCase = new AddPointUseCase(
       inMemoryStudentsRepository,
+      inMemoryPointsRepository,
       inMemoryCategoryPointsRepository,
     )
 

@@ -59,7 +59,7 @@ export class AuthenticateUserUseCase {
 
     const now = new Date()
 
-    now.setHours(now.getDate() + 7) // add 7 days
+    now.setHours(now.getHours() + 24) // add 24 hours
 
     const accessToken = await this.encrypter.encrypt({
       sub: user.id.toString(),

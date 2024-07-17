@@ -5,10 +5,12 @@ import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
+import { CategoryPointFactory } from 'test/factories/make-category-point'
 import { ClassDayFactory } from 'test/factories/make-class-day'
 import { JourneyFactory } from 'test/factories/make-jorney'
 import { StudentFactory } from 'test/factories/make-student'
 import { TeacherFactory } from 'test/factories/make-teacher'
+import { waitFor } from 'test/utils/wait-for'
 
 describe('Edit classday (E2E)', () => {
   let app: INestApplication
@@ -16,6 +18,7 @@ describe('Edit classday (E2E)', () => {
   let teacherFactory: TeacherFactory
   let studentFactory: StudentFactory
   let journeyFactory: JourneyFactory
+  let categoryFactory: CategoryPointFactory
   let prisma: PrismaService
   let jwt: JwtService
 
@@ -27,6 +30,7 @@ describe('Edit classday (E2E)', () => {
         TeacherFactory,
         JourneyFactory,
         StudentFactory,
+        CategoryPointFactory,
       ],
     }).compile()
 
@@ -37,6 +41,7 @@ describe('Edit classday (E2E)', () => {
     journeyFactory = moduleRef.get(JourneyFactory)
     classdayFactory = moduleRef.get(ClassDayFactory)
     teacherFactory = moduleRef.get(TeacherFactory)
+    categoryFactory = moduleRef.get(CategoryPointFactory)
 
     jwt = moduleRef.get(JwtService)
 
@@ -48,6 +53,12 @@ describe('Edit classday (E2E)', () => {
     const classDay = await classdayFactory.makePrismaClassDay({
       currentDay: 1,
       jorneyId: journey.id,
+    })
+
+    const category = await categoryFactory.makePrismaCategoryPoint({
+      icon: 'appointment',
+      text: 'Aula dada',
+      value: 2,
     })
 
     const user1 = await studentFactory.makePrismaStudent({
@@ -67,6 +78,7 @@ describe('Edit classday (E2E)', () => {
       .send({
         classDayId: classDay.id.toString(),
         studentsIds: [user1.id.toString(), user2.id.toString()],
+        categoryPointId: category.id.toString(),
       })
 
     expect(response.statusCode).toBe(200)
@@ -78,5 +90,15 @@ describe('Edit classday (E2E)', () => {
     })
 
     expect(user?.daysInARow).toBe(1)
+
+    await waitFor(async () => {
+      const notification = await prisma.notification.findFirst({
+        where: {
+          recipientId: user1.id.toString(),
+        },
+      })
+
+      expect(notification?.title).toBe('Aula dada')
+    })
   })
 })

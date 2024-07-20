@@ -9,6 +9,7 @@ export interface ClassDayProps {
   maxDay: number
   date: Date
   classDayStudentList: ClassDayStudentList
+  content?: string | null
 }
 
 export class ClassDay extends AggregateRoot<ClassDayProps> {
@@ -32,8 +33,16 @@ export class ClassDay extends AggregateRoot<ClassDayProps> {
     return this.props.maxDay
   }
 
+  get content() {
+    return this.props.content
+  }
+
   set attendanceList(attendanceList: ClassDayStudentList) {
     this.props.classDayStudentList = attendanceList
+  }
+
+  set content(content: string | null | undefined) {
+    this.props.content = content
   }
 
   static create(

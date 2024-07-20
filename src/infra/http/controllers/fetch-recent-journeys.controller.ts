@@ -5,8 +5,6 @@ import {
   Get,
   Query,
 } from '@nestjs/common'
-import { CurrentUser } from '@/infra/auth/current-user-decorator'
-import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { NotAllowedError } from '@/domain/gamefication/aplication/use-cases/errors/not-allowed-error'
@@ -31,11 +29,9 @@ export class FetchRecentJorneysController {
   @Get()
   async handler(
     @Query('page', queryValidationPipe) page: PageQueryParamSchema,
-    @CurrentUser() userPayload: UserPayload,
   ) {
     const result = await this.fetchRecentJorneys.execute({
       page: page ?? 1,
-      teacherId: userPayload.sub,
     })
 
     if (result.isLeft()) {

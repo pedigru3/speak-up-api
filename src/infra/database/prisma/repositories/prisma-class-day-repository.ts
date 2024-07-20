@@ -22,14 +22,6 @@ export class PrismaClassDaysRepository implements ClassDayRepository {
   }
 
   async findById(id: string): Promise<ClassDay | null> {
-    const cacheHit = await this.cache.get(`classday:${id}`)
-
-    if (cacheHit) {
-      const cacheData: ClassDay = ClassDay.fromJSON(cacheHit)
-
-      return cacheData
-    }
-
     const classday = await this.prisma.journeyDay.findUnique({
       where: {
         id,
@@ -48,8 +40,6 @@ export class PrismaClassDaysRepository implements ClassDayRepository {
     }
 
     const classDayEntity = PrismaClassDayMapper.toDomain(classday)
-
-    await this.cache.set(`classday:${id}`, classDayEntity.toJson())
 
     return classDayEntity
   }
@@ -124,6 +114,7 @@ export class PrismaClassDaysRepository implements ClassDayRepository {
       date: presence.jorneyDay.date,
       journey: presence.jorneyDay.journey,
       jorneyId: presence.jorneyDay.jorneyId,
+      content: presence.jorneyDay.content,
     })
   }
 }

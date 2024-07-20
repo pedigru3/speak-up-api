@@ -8,6 +8,7 @@ export class ClassDayPresenter {
       students_presents_ids: classDay.attendanceList.currentItems.map(
         (attendence) => attendence.studentId.toString(),
       ),
+      content: classDay.content,
     }
   }
 }

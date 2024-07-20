@@ -16,6 +16,7 @@ export class PrismaClassDayMapper {
         date: raw.date,
         maxDay: raw.journey.maxDay,
         jorneyId: new UniqueEntityID(raw.jorneyId),
+        content: raw.content,
       },
       new UniqueEntityID(raw.id),
     )
@@ -27,6 +28,7 @@ export class PrismaClassDayMapper {
       date: classday.date,
       jorneyId: classday.jorneyId.toString(),
       currentProgress: classday.currentDay,
+      content: classday.content,
     }
   }
 }

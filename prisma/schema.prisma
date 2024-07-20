@@ -62,6 +62,7 @@ model JourneyDay {
   jorneyId        String   @map("journey_id")
   date            DateTime
   currentProgress Int      @default(0) @map("current_progress")
+  content         String?
 
   presences Presence[]
 

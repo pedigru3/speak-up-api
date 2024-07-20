@@ -7,7 +7,7 @@ import request from 'supertest'
 import { StudentFactory } from 'test/factories/make-student'
 import { TaskFactory } from 'test/factories/make-task'
 
-describe.skip('Upload audio attachment (E2E)', () => {
+describe('Upload audio attachment (E2E)', () => {
   let app: INestApplication
   let studentFactory: StudentFactory
   let tasksFactory: TaskFactory
@@ -46,7 +46,7 @@ describe.skip('Upload audio attachment (E2E)', () => {
     expect(response.statusCode).toBe(201)
   })
 
-  test('[POST] /audio-attachments', async () => {
+  test('[POST] /audio-attachments get Error', async () => {
     const user = await studentFactory.makePrismaStudent()
 
     const accessToken = jwt.sign({ sub: user.id.toString() })

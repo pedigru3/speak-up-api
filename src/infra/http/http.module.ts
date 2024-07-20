@@ -59,6 +59,7 @@ import { UpdateJourneyController } from './controllers/update-journey.controller
 import { EditJourneyUseCase } from '@/domain/gamefication/aplication/use-cases/jorney/edit-journey'
 import { DeleteJourneyController } from './controllers/delete-journey.controller'
 import { SharpService } from '../resize/sharp.service'
+import { UpdateContentController } from './controllers/update-content.controller'
 
 @Module({
   imports: [DatabaseModule, CryptographModule, StorageModule, EmailModule],
@@ -92,6 +93,7 @@ import { SharpService } from '../resize/sharp.service'
     GetTeacherController,
     UpdateJourneyController,
     DeleteJourneyController,
+    UpdateContentController,
   ],
   providers: [
     EditJourneyUseCase,

@@ -39,6 +39,7 @@ describe('Get ClassDay (E2E)', () => {
     const journey = await journeyFactory.makePrismaJourney()
     const classDay = await classDayFactory.makePrismaClassDay({
       jorneyId: journey.id,
+      content: 'Algo',
     })
 
     const accessToken = jwt.sign({ sub: user.id.toString(), role: user.role })
@@ -53,7 +54,10 @@ describe('Get ClassDay (E2E)', () => {
       .query({ id: classDay.id.toString() })
       .set('Authorization', `Bearer ${accessToken}`)
 
+    console.log(response2.body)
+
     expect(response2.statusCode).toBe(200)
     expect(response2.body.id).toEqual(classDay.id.toString())
+    expect(response2.body.content).toEqual(null)
   })
 })

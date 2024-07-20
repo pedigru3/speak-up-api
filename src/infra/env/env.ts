@@ -28,7 +28,6 @@ export const envSchema = z.object({
   AUTH_CERT_URL: z.string(),
   CLIENT_CERT_URL: z.string(),
   UNIVERSAL_DOMAIN: z.string(),
-  GOOGLE_APPLICATION_CREDENTIALS: z.string(),
 })
 
 export type Env = z.infer<typeof envSchema>

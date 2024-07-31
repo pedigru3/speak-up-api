@@ -23,6 +23,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api', app, document)
 
+  app.enableCors({
+    origin: 'https://journey-folder.vercel.app/',
+  })
+
   await app.listen(port)
 }
 bootstrap()

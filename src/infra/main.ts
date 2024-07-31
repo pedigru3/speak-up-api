@@ -24,7 +24,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document)
 
   app.enableCors({
-    origin: 'https://journey-folder.vercel.app/',
+    origin: 'https://journey-folder.vercel.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   })
 
